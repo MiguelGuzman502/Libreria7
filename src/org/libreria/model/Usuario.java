@@ -1,18 +1,21 @@
 package org.libreria.model;
 
 public class Usuario {
-
     private int id;
-    private String usrname;
+    private String username;
+    private String passwordHash;
     private String rol;
+    private boolean activo;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String usrname, String rol) {
+    public Usuario(int id, String username, String passwordHash, String rol, boolean activo) {
         this.id = id;
-        this.usrname = usrname;
+        this.username = username;
+        this.passwordHash = passwordHash;
         this.rol = rol;
+        this.activo = activo;
     }
 
     public int getId() {
@@ -23,12 +26,20 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsrname() {
-        return usrname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsrname(String usrname) {
-        this.usrname = usrname;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getRol() {
@@ -37,5 +48,17 @@ public class Usuario {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getUsrname() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
