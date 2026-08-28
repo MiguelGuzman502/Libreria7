@@ -1,42 +1,106 @@
 package org.libreria.controller;
-
-import javafx.event.ActionEvent;
+ 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import org.libreria.system.Main;
-
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.libreria.model.Usuario;
+import org.libreria.util.Sesion;
+ 
 public class MenuPrincipalDashboardController {
+ 
+    @FXML private Label lblUsuarioHeader;
+    @FXML private Label lblTituloPanel;
+    @FXML private Label lblSubtituloPanel;
+    @FXML private VBox vboxNavegacion;
+    @FXML private FlowPane containerTarjetas;
+ 
     @FXML
-    private BorderPane rootPane;
-    @FXML
-    private Button btnClientes;
-    @FXML
-    private Button btnAutores;
-    @FXML
-    private Button btnCategorias;
-    @FXML
-    private Button btnEditoriales;
-    @FXML
-    private Button btnSalir;
-    @FXML
-    public void handleClientes(ActionEvent event) {
-        System.out.println("Abriendo sección de Clientes...");
+    public void initialize() {
+        Usuario actual = Sesion.getInstancia().getUsuarioActual();
+        if (actual != null) {
+            lblUsuarioHeader.setText("○ " + actual.getUsrname() + " (" + actual.getRol() + ")");
+            cargarVistaPorRol();
+        } else {
+            lblUsuarioHeader.setText("○ Invitado");
+        }
     }
-    @FXML
-    public void handleAutores(ActionEvent event) {
-        System.out.println("Abriendo sección de Autores...");
+ 
+    private void cargarVistaPorRol() {
+        containerTarjetas.getChildren().clear();
+ 
+        if (Sesion.getInstancia().esAdmin()) {
+            lblTituloPanel.setText("¡Panel Admin!");
+            lblSubtituloPanel.setText("Acceso completo a todos los módulos");
+            agregarTarjeta("Libros", "Gestionar libros registrados");
+            agregarTarjeta("Clientes", "Gestionar clientes");
+            agregarTarjeta("Autores", "Gestionar autores");
+            agregarTarjeta("Editoriales", "Gestionar editoriales");
+            agregarTarjeta("Categorías", "Gestionar categorías");
+            agregarTarjeta("Usuarios", "Administrar usuarios");
+            agregarTarjeta("Ventas", "Consultar ventas del sistema");
+ 
+        } else if (Sesion.getInstancia().esCajero()) {
+            lblTituloPanel.setText("Panel de Cajero");
+            lblSubtituloPanel.setText("Proceso de ventas y consulta de inventario");
+ 
+            agregarTarjeta("Agregar venta", "Registrar una nueva venta o factura");
+            agregarTarjeta("Detalle de ventas", "Líneas de cada venta registrada");
+            agregarTarjeta("Lista de ventas", "Consultar ventas registradas");
+            agregarTarjeta("Ver inventario", "Consultar el stock disponible actual");
+ 
+        } else if (Sesion.getInstancia().esBodega()) {
+            lblTituloPanel.setText("Panel de Bodega");
+            lblSubtituloPanel.setText("Control e inventario de productos");
+ 
+            agregarTarjeta("Inventario", "Gestión de stock de libros");
+            agregarTarjeta("Entradas", "Registrar ingreso de mercancía");
+        }
     }
-    @FXML
-    public void handleCategorias(ActionEvent event) {
-        System.out.println("Abriendo sección de Categorías...");
+ 
+    private void agregarTarjeta(String titulo, String descripcion) {
+        // Estructura de tarjeta minimalista con borde negro
+        VBox card = new VBox(10);
+        card.setPrefSize(180, 150);
+        card.setAlignment(Pos.CENTER);
+        card.setPadding(new Insets(15));
+        card.setStyle("-fx-border-color: #000000; -fx-border-width: 1px; -fx-background-color: #FFFFFF; -fx-cursor: hand;");
+ 
+        Label lblTitulo = new Label(titulo);
+        lblTitulo.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #000000;");
+ 
+        Label lblDesc = new Label(descripcion);
+        lblDesc.setWrapText(true);
+        lblDesc.setAlignment(Pos.CENTER);
+        lblDesc.setStyle("-fx-font-size: 11px; -fx-text-fill: #444444;");
+ 
+        card.getChildren().addAll(lblTitulo, lblDesc);
+        containerTarjetas.getChildren().add(card);
+ 
+        // Agrega opción rápida a la barra lateral
+        Label lblSideItem = new Label(titulo);
+        lblSideItem.setStyle("-fx-text-fill: #000000; -fx-cursor: hand; -fx-font-size: 13px;");
+        vboxNavegacion.getChildren().add(lblSideItem);
     }
+ 
     @FXML
-    public void handleEditoriales(ActionEvent event) {
-        System.out.println("Abriendo sección de Editoriales...");
-    }
-    @FXML
-    public void handleSalir(ActionEvent event) {
-        System.exit(0);
+    private void handleCerrarSesion() {
+        Sesion.getInstancia().cerrarSesion();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/libreria/view/LoginView.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) lblUsuarioHeader.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
