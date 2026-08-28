@@ -42,7 +42,7 @@ public class LoginController {
             // Llama a tu Backend
             Usuario usuario = usuarioDAO.autenticar(username, password);
  
-            // Almacena la sesión
+   x         // Almacena la sesión
             Sesion.getInstancia().iniciarSesion(usuario);
  
             // Redirige al Dashboard

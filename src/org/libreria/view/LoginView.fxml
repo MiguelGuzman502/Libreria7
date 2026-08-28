@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.libreria.controller.LoginController">
-    <stylesheets>
-        <URL value="@/org/libreria/view/style/loginview.css"/>
-    </stylesheets>
-</AnchorPane>
+ 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+ 
+<VBox alignment="CENTER" spacing="15.0" prefWidth="400.0" prefHeight="500.0" 
+      style="-fx-background-color: #FFFFFF;" 
+      xmlns="http://javafx.com/javafx/21" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="org.libreria.controller.LoginController">
+<padding>
+<Insets top="40" right="40" bottom="40" left="40"/>
+</padding>
+ 
+    <Label text="¡Bienvenido!" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" />
+ 
+    <VBox spacing="5.0" fillWidth="true">
+<padding><Insets top="15" bottom="0"/></padding>
+<Label text="Usuario:" style="-fx-text-fill: #000000; -fx-font-weight: bold;" />
+<TextField fx:id="txtUsuario" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 1px; -fx-padding: 8px;" />
+</VBox>
+ 
+    <VBox spacing="5.0" fillWidth="true">
+<Label text="contraseña:" style="-fx-text-fill: #000000; -fx-font-weight: bold;" />
+<PasswordField fx:id="txtPassword" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 1px; -fx-padding: 8px;" />
+</VBox>
+ 
+    <Button fx:id="btnIngresar" text="Ingresar" onAction="#handleLogin" 
+            style="-fx-background-color: #FFFFFF; -fx-text-fill: #000000; -fx-border-color: #000000; -fx-border-width: 1px; -fx-font-weight: bold; -fx-cursor: hand;" 
+            prefWidth="150.0" prefHeight="35.0" />
+ 
+    <Label fx:id="lblMensaje" textFill="BLACK" wrapText="true" style="-fx-font-size: 11px;" />
+ 
+    <VBox alignment="CENTER" spacing="8.0">
+<padding><Insets top="10"/></padding>
+<Label text="¿no tiene una cuenta?" style="-fx-text-fill: #000000;" />
+<Button text="registrar" style="-fx-background-color: #FFFFFF; -fx-text-fill: #000000; -fx-border-color: #000000; -fx-border-width: 1px; -fx-cursor: hand;" 
+                prefWidth="120.0" prefHeight="30.0" />
+</VBox>
+</VBox>
