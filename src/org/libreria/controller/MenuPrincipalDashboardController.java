@@ -48,7 +48,7 @@ public class MenuPrincipalDashboardController {
         }
     }
 
-    @FXML private void handleInicio(Event event) { /* Ya estamos en inicio. */ }
+    @FXML private void handleInicio(Event event) {  }
 
     @FXML private void handleAdmin(Event event) {
         if (!RolPermisos.puedeAccederAdmin()) { accesoDenegado(); return; }

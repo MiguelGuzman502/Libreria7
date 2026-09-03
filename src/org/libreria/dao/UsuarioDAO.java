@@ -11,10 +11,6 @@ import org.libreria.util.SecurityUtil;
 
 public class UsuarioDAO {
 
-    /**
-     * Autentica usando el nombre de usuario y la contraseña escrita por el usuario.
-     * La contraseña se convierte a SHA-256 antes de enviarla al procedimiento almacenado.
-     */
     public Usuario autenticar(String username, String password) throws Exception {
         String passwordHash = SecurityUtil.hashSHA256Password(password);
         String sql = "{call sp_iniciar_sesion(?, ?)}";

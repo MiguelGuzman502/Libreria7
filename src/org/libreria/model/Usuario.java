@@ -32,6 +32,5 @@ public class Usuario {
     public boolean isActivo() { return activo; }
     public void setActivo(boolean activo) { this.activo = activo; }
 
-    /** Compatibilidad con código antiguo que usaba el nombre incorrecto. */
     public String getUsrname() { return username; }
 }
