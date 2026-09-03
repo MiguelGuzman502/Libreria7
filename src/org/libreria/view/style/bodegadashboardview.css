@@ -1,111 +1,122 @@
-/* ============================= */
-/* BODEGA DASHBOARD */
-/* ============================= */
-
-.root{
-    -fx-font-family: "Segoe UI";
-    -fx-background-color: #F3F4F6;
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #eef2f7;
 }
 
-.border-pane{
-    -fx-background-color: #F3F4F6;
+.dashboard {
+    -fx-background-color: #eef2f7;
 }
 
-/* HEADER */
-
-.header{
-    -fx-background-color: #F8FAFC;
-    -fx-border-color: #D1D5DB;
-    -fx-border-width: 0 0 1 0;
+.header {
+    -fx-background-color: #3b62d1;
+    -fx-padding: 0 18 0 20;
+    -fx-alignment: center-left;
 }
 
-.header-user{
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1F2937;
-}
-
-.logout-button{
-    -fx-background-color: white;
-    -fx-border-color: #9CA3AF;
-    -fx-text-fill: #1F2937;
-    -fx-font-size: 13px;
-}
-
-.logout-button:hover{
-    -fx-background-color: #E5E7EB;
-    -fx-cursor: hand;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-    -fx-background-color: #E5E7EB;
-    -fx-border-color: #D1D5DB;
-    -fx-border-width: 0 1 0 0;
-}
-
-.sidebar-title{
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1F2937;
-}
-
-.nav-item{
-    -fx-font-size: 13px;
-    -fx-text-fill: #374151;
-    -fx-padding: 8 10 8 10;
-}
-
-.nav-item:hover{
-    -fx-background-color: #D1D5DB;
-    -fx-cursor: hand;
-}
-
-/* CONTENIDO */
-
-.content{
-    -fx-background-color: #F3F4F6;
-}
-
-.panel-title{
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1F2937;
-}
-
-.panel-subtitle{
-    -fx-font-size: 13px;
-    -fx-text-fill: #6B7280;
-}
-
-/* TARJETAS */
-
-.card{
-    -fx-background-color: white;
-    -fx-border-color: #9CA3AF;
-    -fx-border-width: 1px;
-}
-
-.card:hover{
-    -fx-background-color: #F9FAFB;
-    -fx-cursor: hand;
-}
-
-.card-title{
+.header-user {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1F2937;
+    -fx-text-fill: white;
 }
 
-.card-description{
+.logout-button {
+    -fx-background-color: rgba(255,255,255,0.12);
+    -fx-border-color: rgba(255,255,255,0.45);
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 7 15 7 15;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: rgba(255,255,255,0.22);
+}
+
+.sidebar {
+    -fx-background-color: #171b2b;
+    -fx-border-color: #171b2b;
+    -fx-padding: 0 12 0 12;
+}
+
+.sidebar-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7f8aa2;
+    -fx-padding: 20 10 10 10;
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 6;
+    -fx-text-fill: #aeb7c8;
+    -fx-font-size: 13px;
+    -fx-padding: 10 12 10 12;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+}
+
+.nav-item:hover {
+    -fx-background-color: #252b40;
+    -fx-text-fill: white;
+}
+
+.content {
+    -fx-background-color: #eef2f7;
+    -fx-padding: 30 34 30 34;
+}
+
+.panel-title {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #172033;
+}
+
+.panel-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #718096;
+}
+
+.cards {
+    -fx-padding: 12 0 0 0;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #e1e6ee;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(15,23,42,0.08), 10, 0, 0, 3);
+    -fx-cursor: hand;
+}
+
+.card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(15,23,42,0.16), 14, 0, 0, 5);
+}
+
+.card-icon {
+    -fx-font-size: 29px;
+    -fx-text-fill: #273449;
+}
+
+.card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #182033;
+}
+
+.card-description {
     -fx-font-size: 11px;
-    -fx-text-fill: #6B7280;
+    -fx-text-fill: #7a8496;
+    -fx-text-alignment: center;
 }
 
-/* ACENTO BODEGA */
+.card-accent-blue { -fx-border-color: #3b62d1; -fx-border-width: 3 0 0 0; }
+.card-accent-green { -fx-border-color: #10b981; -fx-border-width: 3 0 0 0; }
+.card-accent-orange { -fx-border-color: #f59e0b; -fx-border-width: 3 0 0 0; }
+.card-accent-purple { -fx-border-color: #8b5cf6; -fx-border-width: 3 0 0 0; }
 
-.card-accent{
-    -fx-border-color: #D97706;
-    -fx-border-width: 3px 1px 1px 1px;
+.separator {
+    -fx-background-color: #30374b;
 }

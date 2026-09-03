@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,265 +9,55 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.libreria.controller.CajeroDashboardController"
-            prefWidth="900.0"
-            prefHeight="600.0"
-            style="-fx-background-color: white;">
-
-    <!-- ENCABEZADO -->
+            prefWidth="1100.0" prefHeight="700.0" styleClass="dashboard">
+    <stylesheets><URL value="@style/cajerodashboardview.css"/></stylesheets>
     <top>
-        <HBox prefHeight="50"
-              alignment="CENTER_LEFT"
-              style="-fx-border-color: #000000;
-                     -fx-border-width: 0 0 1 0;">
-
+        <HBox prefHeight="58" styleClass="header">
             <children>
-
-                <Label fx:id="lblUsuarioHeader"
-                       text="○ Mario (cajero)"
-                       style="-fx-font-size: 16px;
-                              -fx-font-weight: bold;"
-                       HBox.hgrow="ALWAYS">
-
-                    <HBox.margin>
-                        <Insets left="20"/>
-                    </HBox.margin>
-
-                </Label>
-
-                <Button text="Cerrar Sesión"
-                        onAction="#handleCerrarSesion"
-                        prefWidth="110"
-                        prefHeight="32"
-                        style="-fx-background-color: white;
-                               -fx-border-color: #000000;
-                               -fx-border-width: 1px;">
-
-                    <HBox.margin>
-                        <Insets right="18"/>
-                    </HBox.margin>
-
-                </Button>
-
+                <Label fx:id="lblUsuarioHeader" text="○ Cajero" styleClass="header-user" HBox.hgrow="ALWAYS"/>
+                <Button text="Cerrar sesión" onAction="#handleCerrarSesion" styleClass="logout-button"/>
             </children>
         </HBox>
     </top>
-
-
-    <!-- MENÚ LATERAL -->
     <left>
-
-        <VBox prefWidth="180"
-              spacing="18"
-              style="-fx-border-color: #000000;
-                     -fx-border-width: 0 1 0 0;">
-
+        <VBox prefWidth="205" spacing="4" styleClass="sidebar">
             <children>
-
-                <Label text="Navegación"
-                       style="-fx-font-size: 14px;
-                              -fx-font-weight: bold;">
-
-                    <VBox.margin>
-                        <Insets top="22" left="18"/>
-                    </VBox.margin>
-
-                </Label>
-
-                <VBox spacing="14">
-
-                    <VBox.margin>
-                        <Insets left="18" top="2"/>
-                    </VBox.margin>
-
-                    <children>
-
-                        <Label text="Nueva Venta"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Detalle Ventas"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Lista de Ventas"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Inventario"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                    </children>
-
-                </VBox>
-
+                <Label text="Navegación" styleClass="sidebar-title"/>
+                <Button text="⌂   Inicio" onAction="#handleRegresar" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="＋   Nueva venta" onAction="#handleNuevaVenta" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="▣   Detalle ventas" onAction="#handleDetalleVentas" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="▤   Lista de ventas" onAction="#handleListaVentas" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="▥   Inventario" onAction="#handleVerInventario" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <VBox VBox.vgrow="ALWAYS"/>
+                <Label text="Cajero" styleClass="sidebar-title"/>
             </children>
-
+            <padding><Insets bottom="12"/></padding>
         </VBox>
-
     </left>
-
-
-    <!-- CONTENIDO -->
-
     <center>
-
-        <VBox spacing="8">
-
-            <padding>
-                <Insets top="25" right="20" bottom="20" left="20"/>
-            </padding>
-
+        <VBox spacing="7" styleClass="content">
             <children>
-
-                <Label text="Panel de Cajero"
-                       style="-fx-font-size: 22px;
-                              -fx-font-weight: bold;"/>
-
-                <Label text="Proceso de ventas y consulta de inventario"
-                       style="-fx-font-size: 13px;
-                              -fx-text-fill: #444444;"/>
-
-
-                <!-- TARJETAS -->
-
-                <FlowPane hgap="20"
-                          vgap="20"
-                          prefWrapLength="600">
-
+                <Label text="Panel de Cajero" styleClass="panel-title"/>
+                <Label text="Proceso de ventas y consulta de inventario" styleClass="panel-subtitle"/>
+                <FlowPane hgap="20" vgap="20" prefWrapLength="650" styleClass="cards">
                     <children>
-
-                        <!-- NUEVA VENTA -->
-
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-
-                                <Label text="+"
-                                       style="-fx-font-size: 35px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Agregar Venta"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Registrar una nueva venta o factura"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       maxWidth="150"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #777777;"/>
-
-                            </children>
-
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleNuevaVenta" styleClass="card card-accent-green">
+                            <children><Label text="＋" styleClass="card-icon"/><Label text="Agregar Venta" styleClass="card-title"/><Label text="Registrar una nueva venta o factura" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
-
-                        <!-- DETALLE -->
-
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-
-                                <Label text="▣"
-                                       style="-fx-font-size: 28px;"/>
-
-                                <Label text="Detalle de Ventas"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Líneas de cada venta registrada"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       maxWidth="150"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #777777;"/>
-
-                            </children>
-
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleDetalleVentas" styleClass="card card-accent-blue">
+                            <children><Label text="▣" styleClass="card-icon"/><Label text="Detalle de Ventas" styleClass="card-title"/><Label text="Líneas de cada venta registrada" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
-
-                        <!-- LISTA -->
-
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-
-                                <Label text="▤"
-                                       style="-fx-font-size: 28px;"/>
-
-                                <Label text="Lista de Ventas"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Consultar ventas registradas"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       maxWidth="150"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #777777;"/>
-
-                            </children>
-
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleListaVentas" styleClass="card card-accent-purple">
+                            <children><Label text="▤" styleClass="card-icon"/><Label text="Lista de Ventas" styleClass="card-title"/><Label text="Consultar ventas registradas" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
-
-                        <!-- INVENTARIO -->
-
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-
-                                <Label text="▣"
-                                       style="-fx-font-size: 28px;"/>
-
-                                <Label text="Ver Inventario"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Consultar el stock disponible actual"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       maxWidth="150"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #777777;"/>
-
-                            </children>
-
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleVerInventario" styleClass="card card-accent-orange">
+                            <children><Label text="▥" styleClass="card-icon"/><Label text="Ver Inventario" styleClass="card-title"/><Label text="Consultar el stock disponible actual" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
                     </children>
-
                 </FlowPane>
-
             </children>
-
         </VBox>
-
     </center>
-
 </BorderPane>

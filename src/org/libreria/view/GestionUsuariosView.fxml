@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+ 
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.libreria.controller.GestionUsuariosController"
+      spacing="12">
+ 
+    <padding>
+<Insets top="30"
+                right="30"
+                bottom="30"
+                left="30"/>
+</padding>
+ 
+    <Label text="GESTIÓN DE USUARIOS"/>
+ 
+    <Label text="Nombre de usuario"/>
+ 
+    <TextField fx:id="txtUsername"
+               promptText="Ingrese usuario"
+               maxWidth="300"/>
+ 
+    <Label text="Contraseña"/>
+ 
+    <PasswordField fx:id="txtPassword"
+                   promptText="Ingrese contraseña"
+                   maxWidth="300"/>
+ 
+    <Button fx:id="btnRegistrar"
+            text="Registrar usuario"
+            onAction="#handleRegistrar"
+            maxWidth="300"/>
+ 
+    <Button fx:id="btnCancelar"
+            text="Regresar"
+            onAction="#handleCancelar"
+            maxWidth="300"/>
+ 
+</VBox>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,290 +9,47 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="org.libreria.controller.AdminDashboardController"
-            prefWidth="900.0"
-            prefHeight="600.0"
-            style="-fx-background-color: white;">
-
-    <!-- ENCABEZADO -->
+            prefWidth="1100.0" prefHeight="700.0" styleClass="dashboard">
+    <stylesheets><URL value="@style/admindashboardview.css"/></stylesheets>
     <top>
-        <HBox prefHeight="50.0"
-              alignment="CENTER_LEFT"
-              style="-fx-border-color: #000000; -fx-border-width: 0 0 1 0;">
-
+        <HBox prefHeight="58" styleClass="header">
             <children>
-
-                <Label fx:id="lblUsuarioHeader"
-                       text="○ Kenneth (admin)"
-                       style="-fx-font-size: 16px; -fx-font-weight: bold;"
-                       HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets left="20"/>
-                    </HBox.margin>
-                </Label>
-
-                <Button text="Cerrar Sesión"
-                        onAction="#handleCerrarSesion"
-                        prefWidth="110"
-                        prefHeight="32"
-                        style="-fx-background-color: white;
-                               -fx-border-color: #000000;
-                               -fx-border-width: 1px;">
-                    <HBox.margin>
-                        <Insets right="18"/>
-                    </HBox.margin>
-                </Button>
-
+                <Label fx:id="lblUsuarioHeader" text="○ Administrador" styleClass="header-user" HBox.hgrow="ALWAYS"/>
+                <Button text="Cerrar sesión" onAction="#handleCerrarSesion" styleClass="logout-button"/>
             </children>
         </HBox>
     </top>
-
-    <!-- MENÚ LATERAL -->
     <left>
-        <VBox prefWidth="180.0"
-              spacing="18"
-              style="-fx-border-color: #000000;
-                     -fx-border-width: 0 1 0 0;">
-
+        <VBox prefWidth="205" spacing="4" styleClass="sidebar">
             <children>
-
-                <Label text="Navegación"
-                       style="-fx-font-size: 14px;
-                              -fx-font-weight: bold;">
-                    <VBox.margin>
-                        <Insets top="22" left="18"/>
-                    </VBox.margin>
-                </Label>
-
-                <VBox spacing="14">
-                    <VBox.margin>
-                        <Insets left="18" top="2"/>
-                    </VBox.margin>
-
-                    <children>
-
-                        <Label text="Libros"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Clientes"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Autores"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Editoriales"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Categorías"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Usuarios"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                        <Label text="Ventas"
-                               style="-fx-font-size: 13px;
-                                      -fx-cursor: hand;"/>
-
-                    </children>
-                </VBox>
-
+                <Label text="Navegación" styleClass="sidebar-title"/>
+                <Button text="⌂   Inicio" onAction="#handleRegresar" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="♙   Usuarios" onAction="#handleUsuarios" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <Button text="⚿   Seguridad" onAction="#handleCambiarPassword" styleClass="nav-item" maxWidth="1.7976931348623157E308"/>
+                <VBox VBox.vgrow="ALWAYS"/>
+                <Label text="Administrador" styleClass="sidebar-title"/>
             </children>
+            <padding><Insets bottom="12"/></padding>
         </VBox>
     </left>
-
-    <!-- CONTENIDO -->
     <center>
-
-        <VBox spacing="8">
-
-            <padding>
-                <Insets top="25" right="20" bottom="20" left="20"/>
-            </padding>
-
+        <VBox spacing="7" styleClass="content">
             <children>
-
-                <Label text="¡Panel Admin!"
-                       style="-fx-font-size: 22px;
-                              -fx-font-weight: bold;"/>
-
-                <Label text="Acceso completo a todos los módulos"
-                       style="-fx-font-size: 13px;
-                              -fx-text-fill: #444444;"/>
-
-                <!-- TARJETAS -->
-                <FlowPane hgap="20"
-                          vgap="20"
-                          prefWrapLength="600">
-
+                <Label text="Panel de Administración" styleClass="panel-title"/>
+                <Label text="Gestión global del sistema y usuarios" styleClass="panel-subtitle"/>
+                <FlowPane hgap="20" vgap="20" prefWrapLength="650" styleClass="cards">
                     <children>
-
-                        <!-- LIBROS -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Libros"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Gestionar libros registrados"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleUsuarios" styleClass="card card-accent-blue">
+                            <children><Label text="♙" styleClass="card-icon"/><Label text="Usuarios" styleClass="card-title"/><Label text="Administrar accesos y roles" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
-                        <!-- CLIENTES -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Clientes"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Gestionar clientes"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
+                        <VBox prefWidth="190" prefHeight="155" alignment="CENTER" spacing="10" onMouseClicked="#handleCambiarPassword" styleClass="card card-accent-purple">
+                            <children><Label text="⚿" styleClass="card-icon"/><Label text="Seguridad" styleClass="card-title"/><Label text="Cambiar clave de acceso" wrapText="true" maxWidth="155" alignment="CENTER" styleClass="card-description"/></children>
                         </VBox>
-
-                        <!-- AUTORES -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Autores"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Gestionar autores"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
-                        </VBox>
-
-                        <!-- EDITORIALES -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Editoriales"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Gestionar editoriales"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
-                        </VBox>
-
-                        <!-- CATEGORÍAS -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Categorías"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Gestionar categorías"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
-                        </VBox>
-
-                        <!-- USUARIOS -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Usuarios"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Administrar usuarios"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
-                        </VBox>
-
-                        <!-- VENTAS -->
-                        <VBox prefWidth="180"
-                              prefHeight="150"
-                              alignment="CENTER"
-                              spacing="10"
-                              style="-fx-border-color: #000000;
-                                     -fx-background-color: white;">
-
-                            <children>
-                                <Label text="Ventas"
-                                       style="-fx-font-size: 14px;
-                                              -fx-font-weight: bold;"/>
-
-                                <Label text="Consultar ventas del sistema"
-                                       wrapText="true"
-                                       alignment="CENTER"
-                                       style="-fx-font-size: 11px;
-                                              -fx-text-fill: #444444;"
-                                       maxWidth="150"/>
-                            </children>
-                        </VBox>
-
                     </children>
                 </FlowPane>
-
             </children>
         </VBox>
     </center>
-
 </BorderPane>

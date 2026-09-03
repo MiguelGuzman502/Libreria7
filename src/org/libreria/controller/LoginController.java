@@ -1,150 +1,74 @@
 package org.libreria.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import org.libreria.dao.UsuarioDAO;
+import org.libreria.manager.SessionContext;
 import org.libreria.model.Usuario;
-import org.libreria.system.Main;
-import org.libreria.util.SecurityUtil;
-import org.libreria.util.Sesion;
 
-public class LoginController implements java.io.Serializable {
+public class LoginController {
 
-    @FXML
-    private TextField txtUsuario;
+    @FXML private TextField txtUsername;
+    @FXML private PasswordField txtPassword;
 
-    @FXML
-    private PasswordField txtPassword;
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     @FXML
-    private Button btnIngresar;
-
-    @FXML
-    private Label lblMensaje;
-
-    private UsuarioDAO usuarioDAO;
-
-    @FXML
-    public void initialize() {
-        usuarioDAO = new UsuarioDAO();
-
-        if (lblMensaje != null) {
-            lblMensaje.setText("");
-        }
-    }
-
-    @FXML
-    public void handleLogin(ActionEvent evento) {
-
-        String username = txtUsuario.getText().trim();
+    private void handleLogin(ActionEvent event) {
+        String username = txtUsername.getText().trim();
         String password = txtPassword.getText();
 
-        // Validar campos vacíos
         if (username.isEmpty() || password.isEmpty()) {
-
-            if (lblMensaje != null) {
-                lblMensaje.setText("Por favor, complete todos sus datos.");
-            }
-
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos requeridos", "Ingrese usuario y contraseña.");
             return;
         }
 
         try {
+            Usuario usuario = usuarioDAO.autenticar(username, password);
 
-            // Convertir contraseña a SHA-256
-            String passwordHash =
-                    SecurityUtil.hashSHA256Password(password);
-
-            // Autenticar usuario
-            Usuario usuarioIniciado =
-                    usuarioDAO.autenticar(username, passwordHash);
-
-            if (usuarioIniciado != null) {
-
-                // Guardar usuario en la sesión
-                Sesion.getInstancia()
-                        .iniciarSesion(usuarioIniciado);
-
-                if (lblMensaje != null) {
-                    lblMensaje.setText("Inicio correcto");
-                }
-
-                // Abrir menú principal
-                abrirDashboard(usuarioIniciado);
-
-            } else {
-
-                if (lblMensaje != null) {
-                    lblMensaje.setText(
-                            "Usuario o contraseña incorrectos."
-                    );
-                }
+            if (usuario == null) {
+                mostrarAlerta(Alert.AlertType.ERROR, "Inicio de sesión", "Usuario o contraseña incorrectos.");
+                txtPassword.clear();
+                txtPassword.requestFocus();
+                return;
             }
 
+            SessionContext.iniciarSesion(usuario.getUsername(), usuario.getRol());
+            abrirMenu(event);
         } catch (Exception e) {
-
-            e.printStackTrace();
-
-            if (lblMensaje != null) {
-                lblMensaje.setText(
-                        "Error: " + e.getMessage()
-                );
-            }
+            mostrarAlerta(Alert.AlertType.ERROR, "Error de conexión", e.getMessage());
         }
     }
 
-    private void abrirDashboard(Usuario usuario) {
-
+    private void abrirMenu(ActionEvent event) {
         try {
-
-            FXMLLoader cargador = new FXMLLoader(
-                    getClass().getResource(
-                            "/org/libreria/view/MenuPrincipalDashboardView.fxml"
-                    )
-            );
-
-            Parent root = cargador.load();
-
-            Stage escenario = Main.getEscenarioPrincipal();
-
-            escenario.setScene(
-                    new Scene(root)
-            );
-
-            escenario.setTitle(
-                    "Panel Principal - "
-                    + usuario.getRol().toUpperCase()
-            );
-
-            escenario.show();
-
-        } catch (IOException e) {
-
-            System.err.println(
-                    "Error al cargar la vista: "
-                    + e.getMessage()
-            );
-
-            e.printStackTrace();
-
-            if (lblMensaje != null) {
-                lblMensaje.setText(
-                        "Error interno al cargar la vista."
-                );
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("/org/libreria/view/MenuPrincipalDashboardView.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1100, 700));
+            stage.setMinWidth(980);
+            stage.setMinHeight(620);
+            stage.setTitle("Librería - Panel Principal");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException | NullPointerException e) {
+            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir el menú principal.\n\n" + e.getMessage());
         }
+    }
+
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

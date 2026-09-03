@@ -7,73 +7,38 @@ import java.sql.SQLException;
 
 import org.libreria.model.Usuario;
 import org.libreria.util.Conexion;
+import org.libreria.util.SecurityUtil;
 
 public class UsuarioDAO {
 
-    public Usuario autenticar(
-            String username,
-            String passwordHash) throws Exception {
-
-        Usuario usuarioEncontrado = null;
-
+    /**
+     * Autentica usando el nombre de usuario y la contraseña escrita por el usuario.
+     * La contraseña se convierte a SHA-256 antes de enviarla al procedimiento almacenado.
+     */
+    public Usuario autenticar(String username, String password) throws Exception {
+        String passwordHash = SecurityUtil.hashSHA256Password(password);
         String sql = "{call sp_iniciar_sesion(?, ?)}";
 
-        try (
-            Connection con =
-                    Conexion.getInstancia().getConexion();
-
-            CallableStatement cs =
-                    con.prepareCall(sql)
-        ) {
-
-            if (con == null) {
-                throw new Exception(
-                        "Error al conectar con la base de datos."
-                );
-            }
+        try (Connection con = Conexion.getInstancia().conectar();
+             CallableStatement cs = con.prepareCall(sql)) {
 
             cs.setString(1, username);
             cs.setString(2, passwordHash);
 
             try (ResultSet rs = cs.executeQuery()) {
-
-                if (rs.next()) {
-
-                    usuarioEncontrado = new Usuario();
-
-                    usuarioEncontrado.setId(
-                            rs.getInt("id")
-                    );
-
-                    usuarioEncontrado.setUsername(
-                            rs.getString("username")
-                    );
-
-                    usuarioEncontrado.setRol(
-                            rs.getString("rol")
-                    );
-
-                } else {
-
-                    throw new Exception(
-                            "Usuario o contraseña incorrectos."
-                    );
+                if (!rs.next()) {
+                    return null;
                 }
+
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setUsername(rs.getString("username"));
+                usuario.setRol(rs.getString("rol"));
+                return usuario;
             }
-
         } catch (SQLException e) {
-
-            System.err.println(
-                    "Error en autenticar: "
-                    + e.getMessage()
-            );
-
-            throw new Exception(
-                    "Error en la base de datos: "
-                    + e.getMessage()
-            );
+            System.err.println("Error en autenticar: " + e.getMessage());
+            throw new Exception("No se pudo conectar con la base de datos. " + e.getMessage(), e);
         }
-
-        return usuarioEncontrado;
     }
 }
