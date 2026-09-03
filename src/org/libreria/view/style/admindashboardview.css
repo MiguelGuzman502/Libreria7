@@ -1,0 +1,125 @@
+/* ============================= */
+/*  ADMIN DASHBOARD */
+/* ============================= */
+
+.root{
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #F3F4F6;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.border-pane{
+    -fx-background-color: #F3F4F6;
+}
+
+/* ============================= */
+/* ENCABEZADO */
+/* ============================= */
+
+.header{
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-user{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.logout-button{
+    -fx-background-color: white;
+    -fx-border-color: #9CA3AF;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+    -fx-text-fill: #1F2937;
+    -fx-font-size: 13px;
+}
+
+.logout-button:hover{
+    -fx-background-color: #E5E7EB;
+    -fx-cursor: hand;
+}
+
+/* ============================= */
+/* MENU LATERAL */
+/* ============================= */
+
+.sidebar{
+    -fx-background-color: #E5E7EB;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar-title{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.nav-item{
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+    -fx-padding: 8 10 8 10;
+}
+
+.nav-item:hover{
+    -fx-background-color: #D1D5DB;
+    -fx-cursor: hand;
+}
+
+/* ============================= */
+/* CONTENIDO */
+/* ============================= */
+
+.content{
+    -fx-background-color: #F3F4F6;
+}
+
+.panel-title{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.panel-subtitle{
+    -fx-font-size: 13px;
+    -fx-text-fill: #6B7280;
+}
+
+/* ============================= */
+/* TARJETAS */
+/* ============================= */
+
+.card{
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #9CA3AF;
+    -fx-border-width: 1px;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+}
+
+.card:hover{
+    -fx-background-color: #F9FAFB;
+    -fx-cursor: hand;
+}
+
+.card-title{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.card-description{
+    -fx-font-size: 11px;
+    -fx-text-fill: #6B7280;
+}
+
+/* ACENTO AZUL */
+
+.card-accent{
+    -fx-border-color: #2563EB;
+    -fx-border-width: 2px 1px 1px 1px;
+}

@@ -1,0 +1,111 @@
+/* ============================= */
+/* BODEGA DASHBOARD */
+/* ============================= */
+
+.root{
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #F3F4F6;
+}
+
+.border-pane{
+    -fx-background-color: #F3F4F6;
+}
+
+/* HEADER */
+
+.header{
+    -fx-background-color: #F8FAFC;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-user{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.logout-button{
+    -fx-background-color: white;
+    -fx-border-color: #9CA3AF;
+    -fx-text-fill: #1F2937;
+    -fx-font-size: 13px;
+}
+
+.logout-button:hover{
+    -fx-background-color: #E5E7EB;
+    -fx-cursor: hand;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    -fx-background-color: #E5E7EB;
+    -fx-border-color: #D1D5DB;
+    -fx-border-width: 0 1 0 0;
+}
+
+.sidebar-title{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.nav-item{
+    -fx-font-size: 13px;
+    -fx-text-fill: #374151;
+    -fx-padding: 8 10 8 10;
+}
+
+.nav-item:hover{
+    -fx-background-color: #D1D5DB;
+    -fx-cursor: hand;
+}
+
+/* CONTENIDO */
+
+.content{
+    -fx-background-color: #F3F4F6;
+}
+
+.panel-title{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.panel-subtitle{
+    -fx-font-size: 13px;
+    -fx-text-fill: #6B7280;
+}
+
+/* TARJETAS */
+
+.card{
+    -fx-background-color: white;
+    -fx-border-color: #9CA3AF;
+    -fx-border-width: 1px;
+}
+
+.card:hover{
+    -fx-background-color: #F9FAFB;
+    -fx-cursor: hand;
+}
+
+.card-title{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1F2937;
+}
+
+.card-description{
+    -fx-font-size: 11px;
+    -fx-text-fill: #6B7280;
+}
+
+/* ACENTO BODEGA */
+
+.card-accent{
+    -fx-border-color: #D97706;
+    -fx-border-width: 3px 1px 1px 1px;
+}

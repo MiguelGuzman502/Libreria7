@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.libreria.controller.BodegaDashboardController"
+            prefWidth="900.0"
+            prefHeight="600.0"
+            style="-fx-background-color: white;">
+
+    <!-- ENCABEZADO -->
+
+    <top>
+
+        <HBox prefHeight="50"
+              alignment="CENTER_LEFT"
+              style="-fx-border-color: #000000;
+                     -fx-border-width: 0 0 1 0;">
+
+            <children>
+
+                <Label fx:id="lblUsuarioHeader"
+                       text="○ Empleado (bodega)"
+                       style="-fx-font-size: 16px;
+                              -fx-font-weight: bold;"
+                       HBox.hgrow="ALWAYS">
+
+                    <HBox.margin>
+                        <Insets left="20"/>
+                    </HBox.margin>
+
+                </Label>
+
+
+                <Button text="Cerrar Sesión"
+                        onAction="#handleCerrarSesion"
+                        prefWidth="110"
+                        prefHeight="32"
+                        style="-fx-background-color: white;
+                               -fx-border-color: #000000;
+                               -fx-border-width: 1px;">
+
+                    <HBox.margin>
+                        <Insets right="18"/>
+                    </HBox.margin>
+
+                </Button>
+
+            </children>
+
+        </HBox>
+
+    </top>
+
+
+    <!-- MENÚ LATERAL -->
+
+    <left>
+
+        <VBox prefWidth="180"
+              spacing="18"
+              style="-fx-border-color: #000000;
+                     -fx-border-width: 0 1 0 0;">
+
+            <children>
+
+                <Label text="Navegación"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;">
+
+                    <VBox.margin>
+                        <Insets top="22" left="18"/>
+                    </VBox.margin>
+
+                </Label>
+
+
+                <VBox spacing="14">
+
+                    <VBox.margin>
+                        <Insets left="18" top="2"/>
+                    </VBox.margin>
+
+                    <children>
+
+                        <Label text="Inventario"
+                               style="-fx-font-size: 13px;
+                                      -fx-cursor: hand;"/>
+
+                        <Label text="Entradas"
+                               style="-fx-font-size: 13px;
+                                      -fx-cursor: hand;"/>
+
+                    </children>
+
+                </VBox>
+
+            </children>
+
+        </VBox>
+
+    </left>
+
+
+    <!-- CONTENIDO -->
+
+    <center>
+
+        <VBox spacing="8">
+
+            <padding>
+                <Insets top="25" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <children>
+
+                <Label text="Panel de Bodega"
+                       style="-fx-font-size: 22px;
+                              -fx-font-weight: bold;"/>
+
+                <Label text="Control e inventario de productos"
+                       style="-fx-font-size: 13px;
+                              -fx-text-fill: #444444;"/>
+
+
+                <!-- TARJETAS -->
+
+                <FlowPane hgap="20"
+                          vgap="20"
+                          prefWrapLength="600">
+
+                    <children>
+
+
+                        <!-- INVENTARIO -->
+
+                        <VBox prefWidth="180"
+                              prefHeight="150"
+                              alignment="CENTER"
+                              spacing="10"
+                              style="-fx-border-color: #000000;
+                                     -fx-background-color: white;">
+
+                            <children>
+
+                                <Label text="▣"
+                                       style="-fx-font-size: 30px;"/>
+
+                                <Label text="Inventario"
+                                       style="-fx-font-size: 14px;
+                                              -fx-font-weight: bold;"/>
+
+                                <Label text="Gestión de stock de libros"
+                                       wrapText="true"
+                                       alignment="CENTER"
+                                       maxWidth="150"
+                                       style="-fx-font-size: 11px;
+                                              -fx-text-fill: #777777;"/>
+
+                            </children>
+
+                        </VBox>
+
+
+                        <!-- ENTRADAS -->
+
+                        <VBox prefWidth="180"
+                              prefHeight="150"
+                              alignment="CENTER"
+                              spacing="10"
+                              style="-fx-border-color: #000000;
+                                     -fx-background-color: white;">
+
+                            <children>
+
+                                <Label text="+"
+                                       style="-fx-font-size: 35px;
+                                              -fx-font-weight: bold;"/>
+
+                                <Label text="Entradas"
+                                       style="-fx-font-size: 14px;
+                                              -fx-font-weight: bold;"/>
+
+                                <Label text="Registrar ingreso de mercancía"
+                                       wrapText="true"
+                                       alignment="CENTER"
+                                       maxWidth="150"
+                                       style="-fx-font-size: 11px;
+                                              -fx-text-fill: #777777;"/>
+
+                            </children>
+
+                        </VBox>
+
+                    </children>
+
+                </FlowPane>
+
+            </children>
+
+        </VBox>
+
+    </center>
+
+</BorderPane>

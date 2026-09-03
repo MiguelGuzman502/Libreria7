@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import org.libreria.model.Usuario;
 import org.libreria.util.Sesion;
 
-public class MenuPrincipalDashboardController {
+public class AdminDashboardController {
 
     @FXML
     private Label lblUsuarioHeader;
@@ -16,12 +16,12 @@ public class MenuPrincipalDashboardController {
     @FXML
     public void initialize() {
 
-        // Obtener el usuario que inició sesión
         Usuario actual = Sesion.getInstancia().getUsuarioActual();
 
         if (actual != null) {
             lblUsuarioHeader.setText(
-                "○ " + actual.getUsername() + " (" + actual.getRol() + ")"
+                "○ " + actual.getUsername() +
+                " (" + actual.getRol() + ")"
             );
         } else {
             lblUsuarioHeader.setText("○ Invitado");
@@ -31,24 +31,22 @@ public class MenuPrincipalDashboardController {
     @FXML
     private void handleCerrarSesion() {
 
-        // Cerrar la sesión actual
         Sesion.getInstancia().cerrarSesion();
 
         try {
 
-            // Cargar la ventana de Login
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/org/libreria/view/LoginView.fxml")
+                getClass().getResource(
+                    "/org/libreria/view/LoginView.fxml"
+                )
             );
 
             Scene scene = new Scene(loader.load());
 
-            // Obtener la ventana actual
             Stage stage = (Stage) lblUsuarioHeader
                     .getScene()
                     .getWindow();
 
-            // Cambiar al Login
             stage.setScene(scene);
             stage.setTitle("Login");
             stage.show();
