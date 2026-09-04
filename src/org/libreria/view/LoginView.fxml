@@ -14,32 +14,68 @@
            fx:controller="org.libreria.controller.LoginController"
            prefWidth="520.0"
            prefHeight="650.0"
-           styleClass="login-root">
+           styleClass="login-root"
+           style="-fx-background-color: transparent;">
+
     <stylesheets>
         <URL value="@style/loginview.css"/>
     </stylesheets>
 
-    <VBox maxWidth="390.0" prefWidth="390.0" prefHeight="510.0"
-          alignment="TOP_CENTER" spacing="18.0" styleClass="login-card">
+    <VBox maxWidth="390.0"
+          prefWidth="390.0"
+          prefHeight="510.0"
+          alignment="TOP_CENTER"
+          spacing="18.0"
+          styleClass="login-card">
+
         <padding>
-            <Insets top="42" right="42" bottom="42" left="42"/>
+            <Insets top="42"
+                    right="42"
+                    bottom="42"
+                    left="42"/>
         </padding>
 
-        <Label text="¡Bienvenido!" styleClass="login-title"/>
-        <Label text="Inicia sesión para continuar" styleClass="login-subtitle"/>
+        <Label text="¡Bienvenido!"
+               styleClass="login-title"/>
 
-        <VBox spacing="7" maxWidth="306">
-            <Label text="Usuario:" styleClass="field-label"/>
-            <TextField fx:id="txtUsername" promptText="Ingrese su usuario" prefHeight="44" styleClass="login-field"/>
+        <Label text="Inicia sesión para continuar"
+               styleClass="login-subtitle"/>
+
+        <VBox spacing="7"
+              maxWidth="306">
+
+            <Label text="Usuario:"
+                   styleClass="field-label"/>
+
+            <TextField fx:id="txtUsername"
+                       promptText="Ingrese su usuario"
+                       prefHeight="44"
+                       styleClass="login-field"/>
+
         </VBox>
 
-        <VBox spacing="7" maxWidth="306">
-            <Label text="Contraseña:" styleClass="field-label"/>
-            <PasswordField fx:id="txtPassword" promptText="Ingrese su contraseña" prefHeight="44" styleClass="login-field"/>
+        <VBox spacing="7"
+              maxWidth="306">
+
+            <Label text="Contraseña:"
+                   styleClass="field-label"/>
+
+            <PasswordField fx:id="txtPassword"
+                           promptText="Ingrese su contraseña"
+                           prefHeight="44"
+                           styleClass="login-field"/>
+
         </VBox>
 
-        <Button text="Ingresar" onAction="#handleLogin" prefWidth="306" prefHeight="44" styleClass="login-button"/>
+        <Button text="Ingresar"
+                onAction="#handleLogin"
+                prefWidth="306"
+                prefHeight="44"
+                styleClass="login-button"/>
 
-        <Label text="Sistema de gestión de librería" styleClass="login-footer"/>
+        <Label text="Sistema de gestión de librería"
+               styleClass="login-footer"/>
+
     </VBox>
+
 </StackPane>

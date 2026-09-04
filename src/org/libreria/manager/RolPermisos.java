@@ -1,4 +1,5 @@
 package org.libreria.manager;
+
 public class RolPermisos {
 
     private RolPermisos() {
