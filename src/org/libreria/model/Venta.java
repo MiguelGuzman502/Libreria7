@@ -1,5 +1,6 @@
 package org.libreria.model;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -30,12 +31,57 @@ public class Venta {
 
     public void setId(int id) {
         this.id = id;
+=======
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Venta {
+
+    private int idVenta;
+    private LocalDateTime fecha;
+    private double montoTotal;
+    private List<DetalleVenta> detalles;
+
+    public Venta() {
+        detalles = new ArrayList<>();
+        fecha = LocalDateTime.now();
+    }
+
+    public Venta(int idVenta, LocalDateTime fecha, double montoTotal) {
+        this.idVenta = idVenta;
+        this.fecha = fecha;
+        this.montoTotal = montoTotal;
+        this.detalles = new ArrayList<>();
+    }
+
+    public void agregarDetalle(DetalleVenta detalle) {
+        detalles.add(detalle);
+        calcularTotal();
+    }
+
+    private void calcularTotal() {
+        montoTotal = 0;
+
+        for (DetalleVenta detalle : detalles) {
+            montoTotal += detalle.getSubtotal();
+        }
+    }
+
+    public int getIdVenta() {
+        return idVenta;
+    }
+
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
+>>>>>>> origin/feature/emilio-comprobantes-pruebas
     }
 
     public LocalDateTime getFecha() {
         return fecha;
     }
 
+<<<<<<< HEAD
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
@@ -64,3 +110,13 @@ public class Venta {
         this.usuario = usuario;
     }
 }
+=======
+    public double getMontoTotal() {
+        return montoTotal;
+    }
+
+    public List<DetalleVenta> getDetalles() {
+        return detalles;
+    }
+}
+>>>>>>> origin/feature/emilio-comprobantes-pruebas

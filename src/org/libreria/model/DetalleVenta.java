@@ -1,5 +1,6 @@
 package org.libreria.model;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 
 public class DetalleVenta {
@@ -35,12 +36,31 @@ public class DetalleVenta {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+=======
+public class DetalleVenta {
+
+    private String producto;
+    private int cantidad;
+    private double precio;
+    private double subtotal;
+
+    public DetalleVenta(String producto, int cantidad, double precio) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.subtotal = cantidad * precio;
+    }
+
+    public String getProducto() {
+        return producto;
+>>>>>>> origin/feature/emilio-comprobantes-pruebas
     }
 
     public int getCantidad() {
         return cantidad;
     }
 
+<<<<<<< HEAD
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
@@ -53,3 +73,13 @@ public class DetalleVenta {
         this.subtotal = subtotal;
     }
 }
+=======
+    public double getPrecio() {
+        return precio;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+}
+>>>>>>> origin/feature/emilio-comprobantes-pruebas
