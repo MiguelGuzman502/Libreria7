@@ -1,20 +1,33 @@
 package org.libreria.model;
 
-<<<<<<< HEAD
 import java.math.BigDecimal;
 
 public class DetalleVenta {
 
     private int idVenta;
     private String isbn;
+    private String producto;
     private int cantidad;
+    private double precio;
     private BigDecimal subtotal;
 
     public DetalleVenta() {
     }
 
-    public DetalleVenta(int idVenta, String isbn,
-            int cantidad, BigDecimal subtotal) {
+    // Constructor utilizado por la parte de comprobantes
+    public DetalleVenta(String producto, int cantidad, double precio) {
+        this.producto = producto;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.subtotal = BigDecimal.valueOf(cantidad * precio);
+    }
+
+    // Constructor utilizado por DAO
+    public DetalleVenta(
+            int idVenta,
+            String isbn,
+            int cantidad,
+            BigDecimal subtotal) {
 
         this.idVenta = idVenta;
         this.isbn = isbn;
@@ -36,33 +49,32 @@ public class DetalleVenta {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-=======
-public class DetalleVenta {
-
-    private String producto;
-    private int cantidad;
-    private double precio;
-    private double subtotal;
-
-    public DetalleVenta(String producto, int cantidad, double precio) {
-        this.producto = producto;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.subtotal = cantidad * precio;
     }
 
     public String getProducto() {
         return producto;
->>>>>>> origin/feature/emilio-comprobantes-pruebas
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
     public int getCantidad() {
         return cantidad;
     }
 
-<<<<<<< HEAD
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+        recalcularSubtotal();
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+        recalcularSubtotal();
     }
 
     public BigDecimal getSubtotal() {
@@ -72,14 +84,13 @@ public class DetalleVenta {
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
-}
-=======
-    public double getPrecio() {
-        return precio;
-    }
 
-    public double getSubtotal() {
-        return subtotal;
+    private void recalcularSubtotal() {
+
+        if (precio > 0 && cantidad > 0) {
+            subtotal = BigDecimal.valueOf(
+                    cantidad * precio
+            );
+        }
     }
 }
->>>>>>> origin/feature/emilio-comprobantes-pruebas
