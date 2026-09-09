@@ -1,15 +1,26 @@
 package org.libreria.manager;
+
 public class SessionContext {
 
+    private static int idUsuario;
     private static String username;
     private static String rol;
+
+    public static void iniciarSesion(String username, String rol) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     private SessionContext() {
     }
 
-    public static void iniciarSesion(String username, String rol) {
+    public static void iniciarSesion(int idUsuario, String username, String rol) {
+        SessionContext.idUsuario = idUsuario;
         SessionContext.username = username;
         SessionContext.rol = rol;
+    }
+
+    public static int getIdUsuario() {
+        return idUsuario;
     }
 
     public static String getUsername() {
@@ -37,6 +48,7 @@ public class SessionContext {
     }
 
     public static void cerrarSesion() {
+        idUsuario = 0;
         username = null;
         rol = null;
     }

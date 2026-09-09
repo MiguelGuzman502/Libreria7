@@ -15,7 +15,7 @@ public class Conexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println("Error Driver: " + e.getMessage());
+            System.err.println("Error Driver MySQL: " + e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class Conexion {
         try {
             return conectar();
         } catch (SQLException e) {
-            System.err.println("Error al obtener la conexión: " + e.getMessage());
+            System.err.println("Error de conexión: " + e.getMessage());
             return null;
         }
     }
