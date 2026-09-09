@@ -1,0 +1,78 @@
+.venta-view {
+    -fx-background-color: #f4f6f8;
+}
+
+.header {
+    -fx-background-color: #1f2937;
+}
+
+.title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.content {
+    -fx-background-color: #f4f6f8;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.text-field {
+    -fx-padding: 10px;
+}
+
+.primary-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 9px 18px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.secondary-button {
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 9px 18px;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #d1d5db;
+}
+
+.danger-button {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-padding: 9px 18px;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #b91c1c;
+}
+
+.table-view {
+    -fx-background-color: white;
+}
+
+.total-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.total-value {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-min-width: 90px;
+}
+
+

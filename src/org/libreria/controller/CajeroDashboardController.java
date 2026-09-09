@@ -26,8 +26,9 @@ public class CajeroDashboardController {
 
     @FXML private void handleRegresar(Event event) { abrirVista("/org/libreria/view/MenuPrincipalDashboardView.fxml", event); }
 
-    @FXML private void handleNuevaVenta(Event event) { moduloNoDisponible("Nueva Venta"); }
-    @FXML private void handleDetalleVentas(Event event) { moduloNoDisponible("Detalle de Ventas"); }
+@FXML private void handleNuevaVenta(Event event) { moduloNoDisponible("Nueva Venta"); }
+@FXML private void handleNuevaVenta(Event event) {abrirVista("/org/libreria/view/VentaView.fxml", event);}
+
     @FXML private void handleListaVentas(Event event) { moduloNoDisponible("Lista de Ventas"); }
     @FXML private void handleVerInventario(Event event) { moduloNoDisponible("Inventario"); }
 
