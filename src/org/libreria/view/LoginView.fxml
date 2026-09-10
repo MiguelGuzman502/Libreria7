@@ -23,15 +23,15 @@
 
     <VBox maxWidth="390.0"
           prefWidth="390.0"
-          prefHeight="510.0"
+          prefHeight="550.0"
           alignment="TOP_CENTER"
           spacing="18.0"
           styleClass="login-card">
 
         <padding>
-            <Insets top="42"
+            <Insets top="35"
                     right="42"
-                    bottom="42"
+                    bottom="35"
                     left="42"/>
         </padding>
 
@@ -72,6 +72,12 @@
                 prefWidth="306"
                 prefHeight="44"
                 styleClass="login-button"/>
+
+        <Button text="Cerrar"
+                onAction="#handleCerrar"
+                prefWidth="306"
+                prefHeight="40"
+                styleClass="login-button-cerrar"/>
 
         <Label text="Sistema de gestión de librería"
                styleClass="login-footer"/>

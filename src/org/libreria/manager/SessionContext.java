@@ -6,11 +6,13 @@ public class SessionContext {
     private static String username;
     private static String rol;
 
-    public static void iniciarSesion(String username, String rol) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private SessionContext() {
     }
 
-    private SessionContext() {
+    public static void iniciarSesion(String username, String rol) {
+        SessionContext.idUsuario = 0;
+        SessionContext.username = username;
+        SessionContext.rol = rol;
     }
 
     public static void iniciarSesion(int idUsuario, String username, String rol) {
@@ -32,19 +34,20 @@ public class SessionContext {
     }
 
     public static boolean sesionActiva() {
-        return username != null && rol != null;
+        return username != null && !username.isEmpty()
+                && rol != null && !rol.isEmpty();
     }
 
     public static boolean esAdmin() {
-        return rol != null && rol.equalsIgnoreCase("ADMIN");
+        return rol != null && rol.equalsIgnoreCase("admin");
     }
 
     public static boolean esCajero() {
-        return rol != null && rol.equalsIgnoreCase("CAJERO");
+        return rol != null && rol.equalsIgnoreCase("cajero");
     }
 
     public static boolean esEmpleado() {
-        return rol != null && rol.equalsIgnoreCase("EMPLEADO");
+        return rol != null && rol.equalsIgnoreCase("empleado");
     }
 
     public static void cerrarSesion() {

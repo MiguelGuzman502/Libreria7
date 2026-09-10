@@ -1,7 +1,6 @@
 package org.libreria.controller;
 
 import java.io.IOException;
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,200 +10,55 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import org.libreria.manager.SessionContext;
 
 public class CajeroDashboardController {
-
-    @FXML
-    private Label lblUsuarioHeader;
+    @FXML private Label lblUsuarioHeader;
 
     @FXML
     public void initialize() {
-
         if (SessionContext.sesionActiva()) {
-
-            lblUsuarioHeader.setText(
-                    "○ "
-                    + SessionContext.getUsername()
-                    + " ("
-                    + SessionContext.getRol().toLowerCase()
-                    + ")"
-            );
-
+            lblUsuarioHeader.setText("○ " + SessionContext.getUsername() + " (" + SessionContext.getRol().toLowerCase() + ")");
         } else {
-
             lblUsuarioHeader.setText("○ Invitado");
         }
     }
 
-    // ==========================================
-    // REGRESAR AL MENU PRINCIPAL
-    // ==========================================
-
-    @FXML
-    private void handleRegresar(Event event) {
-
-        abrirVista(
-                "/org/libreria/view/MenuPrincipalDashboardView.fxml",
-                event
-        );
-    }
-
-
-    // ==========================================
-    // NUEVA VENTA
-    // ==========================================
-
-    @FXML
-    private void handleNuevaVenta(Event event) {
-
-        abrirVista(
-                "/org/libreria/view/VentaView.fxml",
-                event
-        );
-    }
-
-
-    // ==========================================
-    // LISTA DE VENTAS
-    // ==========================================
-
-    @FXML
-    private void handleListaVentas(Event event) {
-
-        moduloNoDisponible("Lista de Ventas");
-    }
-
-
-    // ==========================================
-    // INVENTARIO
-    // ==========================================
-
-    @FXML
-    private void handleVerInventario(Event event) {
-
-        moduloNoDisponible("Inventario");
-    }
-
-
-    // ==========================================
-    // CERRAR SESION
-    // ==========================================
-
-    @FXML
-    private void handleCerrarSesion(Event event) {
-
+    @FXML public void handleRegresar(Event event) { abrirVista("/org/libreria/view/MenuPrincipalDashboardView.fxml", event); }
+    @FXML public void handleNuevaVenta(Event event) { abrirVista("/org/libreria/view/VentaView.fxml", event); }
+    @FXML public void handleDetalleVentas(Event event) { abrirVista("/org/libreria/view/VentasView.fxml", event); }
+    @FXML public void handleListaVentas(Event event) { abrirVista("/org/libreria/view/VentasView.fxml", event); }
+    @FXML public void handleVerInventario(Event event) { abrirVista("/org/libreria/view/InventarioView.fxml", event); }
+    @FXML public void handleCerrarSesion(Event event) {
         SessionContext.cerrarSesion();
-
-        abrirVista(
-                "/org/libreria/view/LoginView.fxml",
-                event
-        );
+        abrirVista("/org/libreria/view/LoginView.fxml", event);
     }
 
-
-    // ==========================================
-    // MODULOS NO IMPLEMENTADOS
-    // ==========================================
-
-    private void moduloNoDisponible(String modulo) {
-
-        Alert alert =
-                new Alert(Alert.AlertType.INFORMATION);
-
-        alert.setTitle(modulo);
-
-        alert.setHeaderText(null);
-
-        alert.setContentText(
-                "La pantalla de "
-                + modulo
-                + " está preparada en el dashboard, "
-                + "pero el módulo funcional todavía "
-                + "no está implementado en este proyecto."
-        );
-
-        alert.showAndWait();
-    }
-
-
-    // ==========================================
-    // CAMBIAR DE VISTA
-    // ==========================================
-
-    private void abrirVista(
-            String ruta,
-            Event event) {
-
+    private void abrirVista(String ruta, Event event) {
         try {
-
-            Parent root =
-                    FXMLLoader.load(
-                            getClass().getResource(ruta)
-                    );
-
-            Stage stage =
-                    (Stage)
-                    ((Node) event.getSource())
-                    .getScene()
-                    .getWindow();
-
+            Parent root = FXMLLoader.load(getClass().getResource(ruta));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             if (ruta.endsWith("LoginView.fxml")) {
-
-                stage.setScene(
-                        new Scene(
-                                root,
-                                520,
-                                650
-                        )
-                );
-
+                stage.setScene(new Scene(root, 520, 650));
                 stage.setMinWidth(520);
                 stage.setMinHeight(650);
-
             } else {
-
-                stage.setScene(
-                        new Scene(
-                                root,
-                                1100,
-                                700
-                        )
-                );
-
+                stage.setScene(new Scene(root, 1100, 700));
                 stage.setMinWidth(980);
                 stage.setMinHeight(620);
             }
-
             stage.centerOnScreen();
             stage.show();
-
         } catch (IOException | NullPointerException e) {
-
             mostrarError(e);
         }
     }
 
-
-    // ==========================================
-    // MOSTRAR ERROR
-    // ==========================================
-
     private void mostrarError(Exception e) {
-
-        Alert alert =
-                new Alert(Alert.AlertType.ERROR);
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-
         alert.setHeaderText(null);
-
-        alert.setContentText(
-                "No se pudo abrir la vista.\n\n"
-                + e.getMessage()
-        );
-
+        alert.setContentText("No se pudo abrir la vista.\n\n" + e.getMessage());
         alert.showAndWait();
     }
 }

@@ -89,10 +89,6 @@ public class UsuarioDAO {
     }
 
 
-    // =====================================================
-    // REGISTRAR USUARIO
-    // =====================================================
-
     public void registrarUsuario(
             String username,
             String password,

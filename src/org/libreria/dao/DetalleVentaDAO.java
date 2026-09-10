@@ -4,7 +4,6 @@ import java.util.List;
 import org.libreria.model.DetalleVenta;
 
 public interface DetalleVentaDAO {
-
-    void insertarMasivo(int idVenta,
-            List<DetalleVenta> detalles) throws Exception;
+    void insertarMasivo(int idVenta, List<DetalleVenta> detalles) throws Exception;
+    List<DetalleVenta> listarPorVenta(int idVenta) throws Exception;
 }

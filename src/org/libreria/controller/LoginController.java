@@ -17,8 +17,11 @@ import org.libreria.model.Usuario;
 
 public class LoginController {
 
-    @FXML private TextField txtUsername;
-    @FXML private PasswordField txtPassword;
+    @FXML
+    private TextField txtUsername;
+
+    @FXML
+    private PasswordField txtPassword;
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
@@ -28,7 +31,11 @@ public class LoginController {
         String password = txtPassword.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Campos requeridos", "Ingrese usuario y contraseña.");
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Campos requeridos",
+                    "Ingrese usuario y contraseña."
+            );
             return;
         }
 
@@ -36,35 +43,84 @@ public class LoginController {
             Usuario usuario = usuarioDAO.autenticar(username, password);
 
             if (usuario == null) {
-                mostrarAlerta(Alert.AlertType.ERROR, "Inicio de sesión", "Usuario o contraseña incorrectos.");
+                mostrarAlerta(
+                        Alert.AlertType.ERROR,
+                        "Inicio de sesión",
+                        "Usuario o contraseña incorrectos."
+                );
                 txtPassword.clear();
                 txtPassword.requestFocus();
                 return;
             }
 
-            SessionContext.iniciarSesion(usuario.getUsername(), usuario.getRol());
+            SessionContext.iniciarSesion(
+                    usuario.getId(),
+                    usuario.getUsername(),
+                    usuario.getRol()
+            );
+
             abrirMenu(event);
+
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error de conexión", e.getMessage());
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Error de inicio de sesión",
+                    e.getMessage() != null
+                            ? e.getMessage()
+                            : "Ocurrió un error al iniciar sesión."
+            );
         }
+    }
+
+    @FXML
+    private void handleCerrar(ActionEvent event) {
+        Stage stage =
+                (Stage) ((Node) event.getSource())
+                        .getScene()
+                        .getWindow();
+
+        stage.close();
     }
 
     private void abrirMenu(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/org/libreria/view/MenuPrincipalDashboardView.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 1100, 700));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/org/libreria/view/MenuPrincipalDashboardView.fxml"
+                    )
+            );
+
+            Parent root = loader.load();
+
+            Stage stage =
+                    (Stage) ((Node) event.getSource())
+                            .getScene()
+                            .getWindow();
+
+            stage.setScene(
+                    new Scene(root, 1100, 700)
+            );
+
             stage.setMinWidth(980);
             stage.setMinHeight(620);
             stage.setTitle("Librería - Panel Principal");
             stage.centerOnScreen();
             stage.show();
+
         } catch (IOException | NullPointerException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir el menú principal.\n\n" + e.getMessage());
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "No se pudo abrir el menú principal."
+            );
         }
     }
 
-    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+    private void mostrarAlerta(
+            Alert.AlertType tipo,
+            String titulo,
+            String mensaje) {
+
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.libreria.controller.VentasController" prefWidth="1100" prefHeight="700">
+    <top>
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+            <Label text="Ventas registradas" styleClass="title" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="txtIdVenta" promptText="ID de venta" prefWidth="130"/>
+            <Button text="Buscar" onAction="#handleBuscar"/>
+            <Button text="Actualizar" onAction="#handleActualizar"/>
+            <Button text="Regresar" onAction="#handleRegresar"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="10">
+            <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+            <TableView fx:id="tablaVentas" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colVenta" text="Venta" prefWidth="80"/>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="190"/>
+                    <TableColumn fx:id="colCui" text="CUI" prefWidth="180"/>
+                    <TableColumn fx:id="colTotal" text="Total" prefWidth="150"/>
+                </columns>
+            </TableView>
+            <Label fx:id="lblTotalDia" text="Total del día: Q 0.00" styleClass="total-label"/>
+            <Label text="Detalle de la venta seleccionada" styleClass="section-title"/>
+            <TableView fx:id="tablaDetalles" prefHeight="180">
+                <columns>
+                    <TableColumn fx:id="colDetalleIsbn" text="ISBN" prefWidth="170"/>
+                    <TableColumn fx:id="colDetalleProducto" text="Producto" prefWidth="300"/>
+                    <TableColumn fx:id="colDetalleCantidad" text="Cantidad" prefWidth="100"/>
+                    <TableColumn fx:id="colDetalleSubtotal" text="Subtotal" prefWidth="130"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
