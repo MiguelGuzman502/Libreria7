@@ -27,29 +27,40 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) {
+
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
+
             mostrarAlerta(
                     Alert.AlertType.WARNING,
                     "Campos requeridos",
                     "Ingrese usuario y contraseña."
             );
+
             return;
         }
 
         try {
-            Usuario usuario = usuarioDAO.autenticar(username, password);
+
+            Usuario usuario =
+                    usuarioDAO.autenticar(
+                            username,
+                            password
+                    );
 
             if (usuario == null) {
+
                 mostrarAlerta(
                         Alert.AlertType.ERROR,
                         "Inicio de sesión",
                         "Usuario o contraseña incorrectos."
                 );
+
                 txtPassword.clear();
                 txtPassword.requestFocus();
+
                 return;
             }
 
@@ -62,6 +73,7 @@ public class LoginController {
             abrirMenu(event);
 
         } catch (Exception e) {
+
             mostrarAlerta(
                     Alert.AlertType.ERROR,
                     "Error de inicio de sesión",
@@ -74,6 +86,7 @@ public class LoginController {
 
     @FXML
     private void handleCerrar(ActionEvent event) {
+
         Stage stage =
                 (Stage) ((Node) event.getSource())
                         .getScene()
@@ -83,12 +96,15 @@ public class LoginController {
     }
 
     private void abrirMenu(ActionEvent event) {
+
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(
-                            "/org/libreria/view/MenuPrincipalDashboardView.fxml"
-                    )
-            );
+
+            FXMLLoader loader =
+                    new FXMLLoader(
+                            getClass().getResource(
+                                    "/org/libreria/view/MenuPrincipalDashboardView.fxml"
+                            )
+                    );
 
             Parent root = loader.load();
 
@@ -108,6 +124,7 @@ public class LoginController {
             stage.show();
 
         } catch (IOException | NullPointerException e) {
+
             mostrarAlerta(
                     Alert.AlertType.ERROR,
                     "Error",

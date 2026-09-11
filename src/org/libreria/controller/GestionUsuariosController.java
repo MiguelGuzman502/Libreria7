@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import org.libreria.dao.UsuarioDAO;
 import org.libreria.manager.RolPermisos;
+import org.libreria.manager.SessionContext;
 import org.libreria.model.Usuario;
 
 public class GestionUsuariosController {
@@ -44,15 +45,17 @@ public class GestionUsuariosController {
     private Button btnLimpiar;
 
     @FXML
+    private Button btnCambiarEstado;
+
+    @FXML
     private Button btnRegresar;
 
     @FXML
     private ListView<String> lstUsuarios;
 
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-    private final UsuarioDAO usuarioDAO =
-            new UsuarioDAO();
-
+    private List<Usuario> usuarios = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -65,36 +68,31 @@ public class GestionUsuariosController {
 
         cmbRol.getSelectionModel().selectFirst();
 
-
         if (!RolPermisos.puedeGestionarUsuarios()) {
 
             btnRegistrar.setDisable(true);
+            btnCambiarEstado.setDisable(true);
 
             mostrarAlerta(
                     Alert.AlertType.WARNING,
                     "Acceso denegado",
-                    "Solo el administrador puede registrar usuarios."
+                    "Solo el administrador puede gestionar usuarios."
             );
 
             return;
         }
 
-
-        // Cargar usuarios existentes
         cargarUsuarios();
     }
-
 
     private void cargarUsuarios() {
 
         try {
 
-            List<Usuario> usuarios =
-                    usuarioDAO.listarUsuarios();
+            usuarios = usuarioDAO.listarUsuarios();
 
             ObservableList<String> lista =
                     FXCollections.observableArrayList();
-
 
             for (Usuario usuario : usuarios) {
 
@@ -114,9 +112,7 @@ public class GestionUsuariosController {
                 lista.add(informacion);
             }
 
-
             lstUsuarios.setItems(lista);
-
 
         } catch (Exception e) {
 
@@ -125,6 +121,70 @@ public class GestionUsuariosController {
                     "Error",
                     "No se pudieron cargar los usuarios.\n\n"
                     + e.getMessage()
+            );
+        }
+    }
+
+    @FXML
+    private void handleCambiarEstado(ActionEvent event) {
+
+        if (!RolPermisos.puedeGestionarUsuarios()) {
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Acceso denegado",
+                    "Solo el administrador puede cambiar el estado de los usuarios."
+            );
+            return;
+        }
+
+        int indice = lstUsuarios.getSelectionModel().getSelectedIndex();
+
+        if (indice < 0 || indice >= usuarios.size()) {
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Usuario no seleccionado",
+                    "Seleccione un usuario de la lista."
+            );
+            return;
+        }
+
+        Usuario usuario = usuarios.get(indice);
+
+        if (usuario.getId() == SessionContext.getIdUsuario()) {
+            mostrarAlerta(
+                    Alert.AlertType.WARNING,
+                    "Acción no permitida",
+                    "No puede desactivar el usuario con el que inició sesión."
+            );
+            return;
+        }
+
+        boolean nuevoEstado = !usuario.isActivo();
+
+        try {
+
+            usuarioDAO.cambiarEstadoUsuario(
+                    usuario.getId(),
+                    nuevoEstado
+            );
+
+            mostrarAlerta(
+                    Alert.AlertType.INFORMATION,
+                    "Estado actualizado",
+                    "El usuario '"
+                    + usuario.getUsername()
+                    + "' ahora está "
+                    + (nuevoEstado ? "activo." : "inactivo.")
+            );
+
+            cargarUsuarios();
+
+        } catch (Exception e) {
+
+            mostrarAlerta(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    e.getMessage()
             );
         }
     }
@@ -143,19 +203,10 @@ public class GestionUsuariosController {
             return;
         }
 
-
-        String username =
-                txtUsername.getText().trim();
-
-        String password =
-                txtPassword.getText();
-
-        String confirmarPassword =
-                txtConfirmarPassword.getText();
-
-        String rol =
-                cmbRol.getValue();
-
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText();
+        String confirmarPassword = txtConfirmarPassword.getText();
+        String rol = cmbRol.getValue();
 
         if (username.isEmpty()
                 || password.isEmpty()
@@ -171,7 +222,6 @@ public class GestionUsuariosController {
             return;
         }
 
-
         if (username.length() < 3) {
 
             mostrarAlerta(
@@ -182,7 +232,6 @@ public class GestionUsuariosController {
 
             return;
         }
-
 
         if (username.length() > 50) {
 
@@ -195,7 +244,6 @@ public class GestionUsuariosController {
             return;
         }
 
-
         if (password.length() < 6) {
 
             mostrarAlerta(
@@ -206,7 +254,6 @@ public class GestionUsuariosController {
 
             return;
         }
-
 
         if (!password.equals(confirmarPassword)) {
 
@@ -219,7 +266,6 @@ public class GestionUsuariosController {
             return;
         }
 
-
         try {
 
             usuarioDAO.registrarUsuario(
@@ -227,7 +273,6 @@ public class GestionUsuariosController {
                     password,
                     rol
             );
-
 
             mostrarAlerta(
                     Alert.AlertType.INFORMATION,
@@ -237,12 +282,8 @@ public class GestionUsuariosController {
                     + "' fue registrado correctamente."
             );
 
-
             limpiarFormulario();
-
-
             cargarUsuarios();
-
 
         } catch (Exception e) {
 
@@ -256,25 +297,17 @@ public class GestionUsuariosController {
 
     @FXML
     private void handleLimpiar(ActionEvent event) {
-
         limpiarFormulario();
     }
-
 
     private void limpiarFormulario() {
 
         txtUsername.clear();
-
         txtPassword.clear();
-
         txtConfirmarPassword.clear();
-
-        cmbRol.getSelectionModel()
-                .selectFirst();
-
+        cmbRol.getSelectionModel().selectFirst();
         txtUsername.requestFocus();
     }
-
 
     @FXML
     private void handleRegresar(ActionEvent event) {
@@ -284,7 +317,6 @@ public class GestionUsuariosController {
                 event
         );
     }
-
 
     private void abrirVista(
             String ruta,
@@ -297,8 +329,7 @@ public class GestionUsuariosController {
                             getClass().getResource(ruta)
                     );
 
-            Parent root =
-                    loader.load();
+            Parent root = loader.load();
 
             Stage stage =
                     (Stage)
@@ -306,10 +337,7 @@ public class GestionUsuariosController {
                             .getScene()
                             .getWindow();
 
-            stage.setScene(
-                    new Scene(root)
-            );
-
+            stage.setScene(new Scene(root));
             stage.show();
 
         } catch (IOException |
@@ -324,21 +352,15 @@ public class GestionUsuariosController {
         }
     }
 
-
     private void mostrarAlerta(
             Alert.AlertType tipo,
             String titulo,
             String mensaje) {
 
-        Alert alert =
-                new Alert(tipo);
-
+        Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
-
         alert.setHeaderText(null);
-
         alert.setContentText(mensaje);
-
         alert.showAndWait();
     }
 }

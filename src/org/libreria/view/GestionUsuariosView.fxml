@@ -16,18 +16,10 @@
       spacing="30">
 
     <padding>
-        <Insets top="30"
-                right="30"
-                bottom="30"
-                left="30"/>
+        <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
-    <!-- ====================================== -->
-    <!-- FORMULARIO DE REGISTRO -->
-    <!-- ====================================== -->
-
-    <VBox spacing="12"
-          prefWidth="400">
+    <VBox spacing="12" prefWidth="400">
 
         <Label text="GESTIÓN DE USUARIOS"
                style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
@@ -73,11 +65,6 @@
 
     </VBox>
 
-
-    <!-- ====================================== -->
-    <!-- LISTA DE USUARIOS -->
-    <!-- ====================================== -->
-
     <VBox spacing="12"
           prefWidth="400"
           VBox.vgrow="ALWAYS">
@@ -85,10 +72,15 @@
         <Label text="USUARIOS REGISTRADOS"
                style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-        <Label text="Lista de usuarios existentes"/>
+        <Label text="Seleccione un usuario para activar o desactivar su acceso"/>
 
         <ListView fx:id="lstUsuarios"
                   VBox.vgrow="ALWAYS"/>
+
+        <Button fx:id="btnCambiarEstado"
+                text="Activar / Desactivar usuario"
+                onAction="#handleCambiarEstado"
+                maxWidth="1.7976931348623157E308"/>
 
     </VBox>
 
