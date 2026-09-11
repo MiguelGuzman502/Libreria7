@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -35,7 +34,12 @@ public class LibroDAOImpl implements LibroDAO {
             }
         }
 
-        return null;
+        try (PreparedStatement ps = conexion.prepareStatement(
+                "ALTER TABLE libros ADD COLUMN stock INT NOT NULL DEFAULT 0")) {
+            ps.executeUpdate();
+        }
+
+        return "stock";
     }
 
     private boolean tieneAutor(Connection conexion) throws SQLException {
@@ -49,9 +53,7 @@ public class LibroDAOImpl implements LibroDAO {
         sql.append("isbn, titulo, fecha_publicacion, precio, id_categoria, nit_editorial");
 
         String stock = obtenerColumnaStock(conexion);
-        if (stock != null) {
-            sql.append(", ").append(stock).append(" AS stock");
-        }
+        sql.append(", ").append(stock).append(" AS stock");
 
         if (tieneAutor(conexion)) {
             sql.append(", autor");
@@ -81,12 +83,7 @@ public class LibroDAOImpl implements LibroDAO {
         libro.setPrecio(rs.getBigDecimal("precio"));
         libro.setIdCategoria(rs.getInt("id_categoria"));
         libro.setNitEditorial(rs.getString("nit_editorial"));
-
-        try {
-            libro.setStock(rs.getInt("stock"));
-        } catch (SQLException e) {
-            libro.setStock(0);
-        }
+        libro.setStock(rs.getInt("stock"));
 
         return libro;
     }
@@ -97,17 +94,9 @@ public class LibroDAOImpl implements LibroDAO {
 
             String stock = obtenerColumnaStock(conexion);
 
-            String sql;
-
-            if (stock != null) {
-                sql = "INSERT INTO libros "
-                        + "(isbn, titulo, fecha_publicacion, precio, id_categoria, nit_editorial, "
-                        + stock + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
-            } else {
-                sql = "INSERT INTO libros "
-                        + "(isbn, titulo, fecha_publicacion, precio, id_categoria, nit_editorial) "
-                        + "VALUES (?, ?, ?, ?, ?, ?)";
-            }
+            String sql = "INSERT INTO libros "
+                    + "(isbn, titulo, fecha_publicacion, precio, id_categoria, nit_editorial, "
+                    + stock + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement ps = conexion.prepareStatement(sql)) {
 
@@ -123,10 +112,7 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setBigDecimal(4, libro.getPrecio());
                 ps.setInt(5, libro.getIdCategoria());
                 ps.setString(6, libro.getNitEditorial());
-
-                if (stock != null) {
-                    ps.setInt(7, libro.getStock());
-                }
+                ps.setInt(7, libro.getStock());
 
                 ps.executeUpdate();
             }
@@ -138,7 +124,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public List<Libros> listar() throws Exception {
-
         List<Libros> lista = new ArrayList<>();
 
         try (Connection conexion = Conexion.getInstancia().conectar()) {
@@ -166,7 +151,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public Libros buscarPorISBN(String isbn) throws Exception {
-
         try (Connection conexion = Conexion.getInstancia().conectar()) {
 
             boolean autor = tieneAutor(conexion);
@@ -180,7 +164,6 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setString(1, isbn);
 
                 try (ResultSet rs = ps.executeQuery()) {
-
                     if (rs.next()) {
                         return mapear(rs, autor);
                     }
@@ -201,7 +184,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public List<Libros> buscarPorAutor(String autorTexto) throws Exception {
-
         List<Libros> lista = new ArrayList<>();
 
         try (Connection conexion = Conexion.getInstancia().conectar()) {
@@ -219,7 +201,6 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setString(1, "%" + autorTexto + "%");
 
                 try (ResultSet rs = ps.executeQuery()) {
-
                     while (rs.next()) {
                         lista.add(mapear(rs, true));
                     }
@@ -234,7 +215,6 @@ public class LibroDAOImpl implements LibroDAO {
     }
 
     private List<Libros> buscarPorCampo(String campo, String valor) throws Exception {
-
         List<Libros> lista = new ArrayList<>();
 
         try (Connection conexion = Conexion.getInstancia().conectar()) {
@@ -252,7 +232,6 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setString(1, "%" + valor + "%");
 
                 try (ResultSet rs = ps.executeQuery()) {
-
                     while (rs.next()) {
                         lista.add(mapear(rs, autor));
                     }
@@ -268,21 +247,13 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void actualizar(Libros libro) throws Exception {
-
         try (Connection conexion = Conexion.getInstancia().conectar()) {
 
             String stock = obtenerColumnaStock(conexion);
 
-            String sql;
-
-            if (stock != null) {
-                sql = "UPDATE libros SET titulo = ?, fecha_publicacion = ?, precio = ?, "
-                        + "id_categoria = ?, nit_editorial = ?, "
-                        + stock + " = ? WHERE isbn = ?";
-            } else {
-                sql = "UPDATE libros SET titulo = ?, fecha_publicacion = ?, precio = ?, "
-                        + "id_categoria = ?, nit_editorial = ? WHERE isbn = ?";
-            }
+            String sql = "UPDATE libros SET titulo = ?, fecha_publicacion = ?, precio = ?, "
+                    + "id_categoria = ?, nit_editorial = ?, "
+                    + stock + " = ? WHERE isbn = ?";
 
             try (PreparedStatement ps = conexion.prepareStatement(sql)) {
 
@@ -297,13 +268,8 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setBigDecimal(3, libro.getPrecio());
                 ps.setInt(4, libro.getIdCategoria());
                 ps.setString(5, libro.getNitEditorial());
-
-                if (stock != null) {
-                    ps.setInt(6, libro.getStock());
-                    ps.setString(7, libro.getIsbn());
-                } else {
-                    ps.setString(6, libro.getIsbn());
-                }
+                ps.setInt(6, libro.getStock());
+                ps.setString(7, libro.getIsbn());
 
                 ps.executeUpdate();
             }
@@ -315,7 +281,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public void eliminar(String isbn) throws Exception {
-
         try (Connection conexion = Conexion.getInstancia().conectar();
              PreparedStatement ps = conexion.prepareStatement(
                      "DELETE FROM libros WHERE isbn = ?")) {
@@ -330,7 +295,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public boolean validarStock(String isbn, int cantidad) throws Exception {
-
         if (cantidad <= 0) {
             return false;
         }
@@ -339,10 +303,6 @@ public class LibroDAOImpl implements LibroDAO {
 
             String stock = obtenerColumnaStock(conexion);
 
-            if (stock == null) {
-                return true;
-            }
-
             String sql = "SELECT " + stock + " AS stock FROM libros WHERE isbn = ?";
 
             try (PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -350,7 +310,6 @@ public class LibroDAOImpl implements LibroDAO {
                 ps.setString(1, isbn);
 
                 try (ResultSet rs = ps.executeQuery()) {
-
                     return rs.next() && rs.getInt("stock") >= cantidad;
                 }
             }
@@ -367,19 +326,23 @@ public class LibroDAOImpl implements LibroDAO {
         }
 
         try (Connection conexion = Conexion.getInstancia().conectar()) {
+
             String stock = obtenerColumnaStock(conexion);
 
-            if (stock == null) {
-                throw new SQLException("La tabla libros no tiene una columna de stock válida.");
-            }
-
-            String sql = "UPDATE libros SET " + stock + " = " + stock + " + ? WHERE isbn = ?";
+            String sql = "UPDATE libros SET "
+                    + stock
+                    + " = "
+                    + stock
+                    + " + ? WHERE isbn = ?";
 
             try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+
                 ps.setInt(1, cantidad);
                 ps.setString(2, isbn);
+
                 return ps.executeUpdate() > 0;
             }
+
         } catch (SQLException e) {
             throw new Exception("Error al agregar stock: " + e.getMessage(), e);
         }
@@ -387,7 +350,6 @@ public class LibroDAOImpl implements LibroDAO {
 
     @Override
     public boolean actualizarStock(String isbn, int cantidad) throws Exception {
-
         if (cantidad <= 0) {
             return false;
         }
@@ -395,10 +357,6 @@ public class LibroDAOImpl implements LibroDAO {
         try (Connection conexion = Conexion.getInstancia().conectar()) {
 
             String stock = obtenerColumnaStock(conexion);
-
-            if (stock == null) {
-                return true;
-            }
 
             String sql = "UPDATE libros SET "
                     + stock
