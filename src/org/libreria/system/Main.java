@@ -31,10 +31,6 @@ public class Main extends Application {
 
         Stage nuevoEscenario = new Stage();
 
-        /*
-         * Ventana transparente para evitar
-         * bordes/fondo blanco alrededor del login.
-         */
         nuevoEscenario.initStyle(StageStyle.TRANSPARENT);
 
         FXMLLoader loader =
@@ -65,10 +61,7 @@ public class Main extends Application {
     public static void cambiarVista(String fxmlPath)
             throws Exception {
 
-        /*
-         * Si regresamos al login,
-         * utilizamos nuevamente la ventana transparente.
-         */
+
         if (fxmlPath.contains("LoginView")) {
 
             mostrarLogin();
@@ -103,10 +96,6 @@ public class Main extends Application {
 
             scene.setRoot(root);
 
-            /*
-             * Las demás vistas utilizan
-             * fondo normal.
-             */
             scene.setFill(Color.WHITE);
 
         } else {

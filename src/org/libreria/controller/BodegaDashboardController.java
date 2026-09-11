@@ -24,9 +24,17 @@ public class BodegaDashboardController {
         }
     }
 
-    @FXML private void handleRegresar(Event event) { abrirVista("/org/libreria/view/MenuPrincipalDashboardView.fxml", event); }
-    @FXML private void handleInventario(Event event) { abrirVista("/org/libreria/view/InventarioView.fxml", event); }
-    @FXML private void handleEntradas(Event event) { abrirVista("/org/libreria/view/EntradasView.fxml", event); }
+    @FXML private void handleRegresar(Event event) {
+        abrirVista("/org/libreria/view/MenuPrincipalDashboardView.fxml", event);
+    }
+
+    @FXML private void handleInventario(Event event) {
+        abrirVista("/org/libreria/view/InventarioView.fxml", event);
+    }
+
+    @FXML private void handleEntradas(Event event) {
+        abrirVista("/org/libreria/view/EntradaStockView.fxml", event);
+    }
 
     @FXML
     private void handleCerrarSesion(Event event) {
@@ -38,17 +46,23 @@ public class BodegaDashboardController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(ruta));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
             if (ruta.endsWith("LoginView.fxml")) {
                 stage.setScene(new Scene(root, 520, 650));
-                stage.setMinWidth(520); stage.setMinHeight(650);
+                stage.setMinWidth(520);
+                stage.setMinHeight(650);
             } else {
                 stage.setScene(new Scene(root, 1100, 700));
-                stage.setMinWidth(980); stage.setMinHeight(620);
+                stage.setMinWidth(980);
+                stage.setMinHeight(620);
             }
-            stage.centerOnScreen(); stage.show();
+
+            stage.centerOnScreen();
+            stage.show();
         } catch (IOException | NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error"); alert.setHeaderText(null);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
             alert.setContentText("No se pudo abrir la vista.\n\n" + e.getMessage());
             alert.showAndWait();
         }

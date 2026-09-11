@@ -10,7 +10,7 @@ public class Conexion {
     private static final String URL = "jdbc:mysql://localhost:3306/libreriadb_in4cm?serverTimezone=UTC";
     private static final String USER = "IN4CM";
     private static final String PASSWORD = "#NdimAM4";
-    
+
     private Conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
