@@ -13,4 +13,5 @@ public interface LibroDAO {
     void eliminar(String isbn) throws Exception;
     boolean validarStock(String isbn, int cantidad) throws Exception;
     boolean actualizarStock(String isbn, int cantidad) throws Exception;
+    boolean agregarStock(String isbn, int cantidad) throws Exception;
 }

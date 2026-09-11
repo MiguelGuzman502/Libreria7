@@ -53,14 +53,16 @@ public class VentasController {
         colFecha.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFecha() == null ? "" : data.getValue().getFecha().format(formato)));
         colCui.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCuiCliente() <= 0 ? "Sin CUI" : String.valueOf(data.getValue().getCuiCliente())));
         colTotal.setCellValueFactory(data -> new SimpleStringProperty(String.format("Q %.2f", data.getValue().getTotal() == null ? 0 : data.getValue().getTotal().doubleValue())));
-        colDetalleIsbn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIsbn()));
+        colDetalleIsbn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIsbn() == null ? "" : data.getValue().getIsbn()));
         colDetalleProducto.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getProducto() == null ? "" : data.getValue().getProducto()));
         colDetalleCantidad.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getCantidad())));
         colDetalleSubtotal.setCellValueFactory(data -> new SimpleStringProperty(String.format("Q %.2f", data.getValue().getSubtotal() == null ? 0 : data.getValue().getSubtotal().doubleValue())));
     }
 
     @FXML
-    public void handleActualizar() { cargarVentas(); }
+    public void handleActualizar() {
+        cargarVentas();
+    }
 
     @FXML
     public void handleBuscar() {
@@ -72,7 +74,9 @@ public class VentasController {
         try {
             int id = Integer.parseInt(texto);
             Venta venta = ventaDAO.buscarPorId(id);
-            tablaVentas.setItems(venta == null ? FXCollections.observableArrayList() : FXCollections.observableArrayList(venta));
+            tablaVentas.setItems(venta == null
+                    ? FXCollections.observableArrayList()
+                    : FXCollections.observableArrayList(venta));
             cargarDetalles(venta);
         } catch (NumberFormatException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Consulta", "El ID de venta debe ser numérico.");
@@ -83,13 +87,20 @@ public class VentasController {
 
     private void cargarVentas() {
         try {
-            var ventas = ventaDAO.ventasDelDia();
+            var ventas = ventaDAO.listarTodas();
             tablaVentas.setItems(FXCollections.observableArrayList(ventas));
             double total = 0;
-            for (Venta venta : ventas) if (venta.getTotal() != null) total += venta.getTotal().doubleValue();
-            lblTotalDia.setText(String.format("Total del día: Q %.2f", total));
-            if (!ventas.isEmpty()) tablaVentas.getSelectionModel().selectFirst();
-            else tablaDetalles.getItems().clear();
+            for (Venta venta : ventas) {
+                if (venta.getTotal() != null) {
+                    total += venta.getTotal().doubleValue();
+                }
+            }
+            lblTotalDia.setText(String.format("Total de ventas: Q %.2f", total));
+            if (!ventas.isEmpty()) {
+                tablaVentas.getSelectionModel().selectFirst();
+            } else {
+                tablaDetalles.getItems().clear();
+            }
         } catch (Exception e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Ventas", e.getMessage());
         }
@@ -108,7 +119,9 @@ public class VentasController {
     }
 
     @FXML
-    public void handleRegresar(Event event) { abrirVista("/org/libreria/view/CajeroDashboardView.fxml", event); }
+    public void handleRegresar(Event event) {
+        abrirVista("/org/libreria/view/CajeroDashboardView.fxml", event);
+    }
 
     private void abrirVista(String ruta, Event event) {
         try {

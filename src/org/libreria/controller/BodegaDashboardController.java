@@ -25,20 +25,13 @@ public class BodegaDashboardController {
     }
 
     @FXML private void handleRegresar(Event event) { abrirVista("/org/libreria/view/MenuPrincipalDashboardView.fxml", event); }
-    @FXML private void handleInventario(Event event) { moduloNoDisponible("Inventario"); }
-    @FXML private void handleEntradas(Event event) { moduloNoDisponible("Entradas"); }
+    @FXML private void handleInventario(Event event) { abrirVista("/org/libreria/view/InventarioView.fxml", event); }
+    @FXML private void handleEntradas(Event event) { abrirVista("/org/libreria/view/EntradasView.fxml", event); }
 
     @FXML
     private void handleCerrarSesion(Event event) {
         SessionContext.cerrarSesion();
         abrirVista("/org/libreria/view/LoginView.fxml", event);
-    }
-
-    private void moduloNoDisponible(String modulo) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(modulo); alert.setHeaderText(null);
-        alert.setContentText("La pantalla de " + modulo + " está preparada en el dashboard, pero el módulo funcional todavía no está implementado en este proyecto.");
-        alert.showAndWait();
     }
 
     private void abrirVista(String ruta, Event event) {

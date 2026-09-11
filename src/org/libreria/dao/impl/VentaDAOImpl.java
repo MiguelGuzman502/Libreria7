@@ -18,7 +18,9 @@ public class VentaDAOImpl implements VentaDAO {
         Venta venta = new Venta();
         venta.setId(rs.getInt("no_compra"));
         Timestamp fecha = rs.getTimestamp("fecha_compra");
-        if (fecha != null) venta.setFecha(fecha.toLocalDateTime());
+        if (fecha != null) {
+            venta.setFecha(fecha.toLocalDateTime());
+        }
         venta.setTotal(rs.getBigDecimal("total_compra"));
         venta.setCuiCliente(rs.getLong("cui_cliente"));
         return venta;
@@ -31,8 +33,11 @@ public class VentaDAOImpl implements VentaDAO {
              PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setTimestamp(1, venta.getFecha() == null ? new Timestamp(System.currentTimeMillis()) : Timestamp.valueOf(venta.getFecha()));
             ps.setBigDecimal(2, venta.getTotal());
-            if (venta.getCuiCliente() > 0) ps.setLong(3, venta.getCuiCliente());
-            else ps.setNull(3, java.sql.Types.BIGINT);
+            if (venta.getCuiCliente() > 0) {
+                ps.setLong(3, venta.getCuiCliente());
+            } else {
+                ps.setNull(3, java.sql.Types.BIGINT);
+            }
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -49,10 +54,13 @@ public class VentaDAOImpl implements VentaDAO {
     @Override
     public Venta buscarPorId(int id) throws Exception {
         String sql = "SELECT no_compra, fecha_compra, total_compra, cui_cliente FROM compras WHERE no_compra = ?";
-        try (Connection conexion = Conexion.getInstancia().conectar(); PreparedStatement ps = conexion.prepareStatement(sql)) {
+        try (Connection conexion = Conexion.getInstancia().conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return mapear(rs);
+                if (rs.next()) {
+                    return mapear(rs);
+                }
             }
         } catch (SQLException e) {
             throw new Exception("Error al buscar venta: " + e.getMessage(), e);
@@ -63,11 +71,31 @@ public class VentaDAOImpl implements VentaDAO {
     @Override
     public List<Venta> ventasDelDia() throws Exception {
         List<Venta> lista = new ArrayList<>();
-        String sql = "SELECT no_compra, fecha_compra, total_compra, cui_cliente FROM compras WHERE fecha_compra >= CURDATE() AND fecha_compra < CURDATE() + INTERVAL 1 DAY ORDER BY fecha_compra DESC";
-        try (Connection conexion = Conexion.getInstancia().conectar(); PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) lista.add(mapear(rs));
+        String sql = "SELECT no_compra, fecha_compra, total_compra, cui_cliente FROM compras WHERE fecha_compra >= CURDATE() AND fecha_compra < CURDATE() + INTERVAL 1 DAY ORDER BY fecha_compra DESC, no_compra DESC";
+        try (Connection conexion = Conexion.getInstancia().conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                lista.add(mapear(rs));
+            }
         } catch (SQLException e) {
             throw new Exception("Error al consultar ventas del día: " + e.getMessage(), e);
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Venta> listarTodas() throws Exception {
+        List<Venta> lista = new ArrayList<>();
+        String sql = "SELECT no_compra, fecha_compra, total_compra, cui_cliente FROM compras ORDER BY fecha_compra DESC, no_compra DESC";
+        try (Connection conexion = Conexion.getInstancia().conectar();
+             PreparedStatement ps = conexion.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                lista.add(mapear(rs));
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error al consultar las ventas: " + e.getMessage(), e);
         }
         return lista;
     }

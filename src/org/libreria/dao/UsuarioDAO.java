@@ -145,11 +145,6 @@ public class UsuarioDAO {
         }
     }
 
-
-    // =====================================================
-    // LISTAR USUARIOS
-    // =====================================================
-
     public List<Usuario> listarUsuarios() throws Exception {
 
         List<Usuario> usuarios =

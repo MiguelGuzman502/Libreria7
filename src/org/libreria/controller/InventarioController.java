@@ -38,7 +38,7 @@ public class InventarioController {
     }
 
     @FXML public void handleActualizar() { cargar(); }
-    @FXML public void handleRegresar(Event event) { abrirVista("/org/libreria/view/CajeroDashboardView.fxml", event); }
+    @FXML public void handleRegresar(Event event) { abrirVista("/org/libreria/view/BodegaDashboardView.fxml", event); }
 
     private void cargar() {
         try {

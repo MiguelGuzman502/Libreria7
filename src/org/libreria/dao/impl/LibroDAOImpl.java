@@ -361,6 +361,31 @@ public class LibroDAOImpl implements LibroDAO {
     }
 
     @Override
+    public boolean agregarStock(String isbn, int cantidad) throws Exception {
+        if (cantidad <= 0) {
+            return false;
+        }
+
+        try (Connection conexion = Conexion.getInstancia().conectar()) {
+            String stock = obtenerColumnaStock(conexion);
+
+            if (stock == null) {
+                throw new SQLException("La tabla libros no tiene una columna de stock válida.");
+            }
+
+            String sql = "UPDATE libros SET " + stock + " = " + stock + " + ? WHERE isbn = ?";
+
+            try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+                ps.setInt(1, cantidad);
+                ps.setString(2, isbn);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error al agregar stock: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
     public boolean actualizarStock(String isbn, int cantidad) throws Exception {
 
         if (cantidad <= 0) {

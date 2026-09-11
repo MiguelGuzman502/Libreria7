@@ -7,14 +7,12 @@ import java.util.List;
 
 public class Venta {
 
-    // Datos utilizados por DAO / base de datos
     private int id;
     private LocalDateTime fecha;
     private BigDecimal total;
     private long cuiCliente;
     private String usuario;
 
-    // Datos utilizados por comprobantes
     private int idVenta;
     private double montoTotal;
     private List<DetalleVenta> detalles;
@@ -30,7 +28,6 @@ public class Venta {
         detalles = new ArrayList<>();
     }
 
-    // Constructor utilizado por DAO
     public Venta(
             int id,
             LocalDateTime fecha,
@@ -56,7 +53,6 @@ public class Venta {
         this.detalles = new ArrayList<>();
     }
 
-    // Constructor utilizado por comprobantes
     public Venta(
             int idVenta,
             LocalDateTime fecha,
@@ -75,9 +71,6 @@ public class Venta {
         this.detalles = new ArrayList<>();
     }
 
-    // =====================================================
-    // DETALLES
-    // =====================================================
 
     public void agregarDetalle(DetalleVenta detalle) {
 
@@ -121,9 +114,6 @@ public class Venta {
         calcularTotal();
     }
 
-    // =====================================================
-    // ID
-    // =====================================================
 
     public int getId() {
         return id;
@@ -147,10 +137,6 @@ public class Venta {
         this.id = idVenta;
     }
 
-    // =====================================================
-    // FECHA
-    // =====================================================
-
     public LocalDateTime getFecha() {
         return fecha;
     }
@@ -158,10 +144,6 @@ public class Venta {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-
-    // =====================================================
-    // TOTAL
-    // =====================================================
 
     public BigDecimal getTotal() {
         return total;
@@ -187,9 +169,6 @@ public class Venta {
         this.total = BigDecimal.valueOf(montoTotal);
     }
 
-    // =====================================================
-    // CLIENTE
-    // =====================================================
 
     public long getCuiCliente() {
         return cuiCliente;
@@ -198,10 +177,6 @@ public class Venta {
     public void setCuiCliente(long cuiCliente) {
         this.cuiCliente = cuiCliente;
     }
-
-    // =====================================================
-    // USUARIO
-    // =====================================================
 
     public String getUsuario() {
         return usuario;

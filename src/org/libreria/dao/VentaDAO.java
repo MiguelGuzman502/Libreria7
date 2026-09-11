@@ -7,4 +7,5 @@ public interface VentaDAO {
     int insertar(Venta venta) throws Exception;
     Venta buscarPorId(int id) throws Exception;
     List<Venta> ventasDelDia() throws Exception;
+    List<Venta> listarTodas() throws Exception;
 }

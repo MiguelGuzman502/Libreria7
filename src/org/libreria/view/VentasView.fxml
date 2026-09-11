@@ -30,7 +30,7 @@
                     <TableColumn fx:id="colTotal" text="Total" prefWidth="150"/>
                 </columns>
             </TableView>
-            <Label fx:id="lblTotalDia" text="Total del día: Q 0.00" styleClass="total-label"/>
+            <Label fx:id="lblTotalDia" text="Total de ventas: Q 0.00" styleClass="total-label"/>
             <Label text="Detalle de la venta seleccionada" styleClass="section-title"/>
             <TableView fx:id="tablaDetalles" prefHeight="180">
                 <columns>

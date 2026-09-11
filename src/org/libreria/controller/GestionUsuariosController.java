@@ -54,10 +54,6 @@ public class GestionUsuariosController {
             new UsuarioDAO();
 
 
-    // =====================================================
-    // INICIALIZAR
-    // =====================================================
-
     @FXML
     public void initialize() {
 
@@ -88,10 +84,6 @@ public class GestionUsuariosController {
         cargarUsuarios();
     }
 
-
-    // =====================================================
-    // CARGAR USUARIOS
-    // =====================================================
 
     private void cargarUsuarios() {
 
@@ -137,11 +129,6 @@ public class GestionUsuariosController {
         }
     }
 
-
-    // =====================================================
-    // REGISTRAR USUARIO
-    // =====================================================
-
     @FXML
     private void handleRegistrar(ActionEvent event) {
 
@@ -169,10 +156,6 @@ public class GestionUsuariosController {
         String rol =
                 cmbRol.getValue();
 
-
-        // ==============================
-        // VALIDACIONES
-        // ==============================
 
         if (username.isEmpty()
                 || password.isEmpty()
@@ -237,10 +220,6 @@ public class GestionUsuariosController {
         }
 
 
-        // ==============================
-        // REGISTRO
-        // ==============================
-
         try {
 
             usuarioDAO.registrarUsuario(
@@ -259,11 +238,9 @@ public class GestionUsuariosController {
             );
 
 
-            // Limpiar formulario
             limpiarFormulario();
 
 
-            // Actualizar lista
             cargarUsuarios();
 
 
@@ -276,11 +253,6 @@ public class GestionUsuariosController {
             );
         }
     }
-
-
-    // =====================================================
-    // LIMPIAR
-    // =====================================================
 
     @FXML
     private void handleLimpiar(ActionEvent event) {
@@ -304,10 +276,6 @@ public class GestionUsuariosController {
     }
 
 
-    // =====================================================
-    // REGRESAR
-    // =====================================================
-
     @FXML
     private void handleRegresar(ActionEvent event) {
 
@@ -317,10 +285,6 @@ public class GestionUsuariosController {
         );
     }
 
-
-    // =====================================================
-    // ABRIR VISTA
-    // =====================================================
 
     private void abrirVista(
             String ruta,
@@ -360,10 +324,6 @@ public class GestionUsuariosController {
         }
     }
 
-
-    // =====================================================
-    // ALERTAS
-    // =====================================================
 
     private void mostrarAlerta(
             Alert.AlertType tipo,
